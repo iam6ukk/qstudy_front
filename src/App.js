@@ -1,8 +1,18 @@
+import styled from "styled-components";
+import moudleStyle from "./test/test.module.css";
 
+const CustomInput = styled.input `
+  width: 100px;
+  height: 100px;
+  box-sizing: border-box;
+  background-color: lightblue;
+`
 
 const App = () => {
   return (
     <div className="App">
+      <input className={moudleStyle.test_input} value={"test"}></input>
+      <CustomInput value="test"></CustomInput>
       김유경 바보
     </div>
   );
