@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Google from "../../components/google.js"
+import GoogleButton from "../../components/google.js"
 import GithubButton from "../../components/github.js"
 
 import styles from './css/login.module.css'
@@ -30,7 +30,7 @@ const LoginPage = () => {
                 </div>
                 
                 <div className={styles.sso_wrap}>
-                    <Google />
+                    <GoogleButton />
                     <GithubButton />
                 </div>
             </div>
