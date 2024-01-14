@@ -8,6 +8,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/login/loginPage.js"
 import SignupPage from "./pages/login/signupPage.js"
+import MainPage from "./pages/main/mainPage";
 
 const CustomInput = styled.input`
   width: 100px;
@@ -23,6 +24,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/signup" element={<SignupPage/>}/>
+        <Route path="/" element={<MainPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>

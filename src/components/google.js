@@ -1,10 +1,12 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const GoogleLoginButton = () => {
   const clientId =
     "957143631493-r4bne96s73eldk4kreqs623jj40cc6eg.apps.googleusercontent.com";
+  const navigate = useNavigate();
 
   const handleGoogleLoginSuccess = async (res) => {
     try {
@@ -18,6 +20,7 @@ const GoogleLoginButton = () => {
         },
         body: JSON.stringify(decodedToken),
       });
+      navigate('/');
     } catch (error) {
       console.error("토큰 디코딩 또는 서버 전송 오류: ", error);
     }
