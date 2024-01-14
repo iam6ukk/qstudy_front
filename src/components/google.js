@@ -11,12 +11,12 @@ const GoogleLoginButton = () => {
       const decodedToken = jwtDecode(res.credential);
       console.log(decodedToken);
 
-      await fetch("http://localhost:8080/api/saveToken", {
+      await fetch("http://localhost:8080/login/google", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ decodedToken }),
+        body: JSON.stringify(decodedToken),
       });
     } catch (error) {
       console.error("토큰 디코딩 또는 서버 전송 오류: ", error);
