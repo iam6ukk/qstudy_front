@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import Header from "../../components/header";
+import Board from "./board";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -11,7 +13,11 @@ const MainPage = () => {
 
     return (
         <div>
-            메인 페이지
+            <Header></Header>
+            <Routes>
+                <Route path="/" element={<Board/>}/>
+                <Route path="/board" element={<Board/>}/>
+            </Routes>
         </div>
     )
 }
