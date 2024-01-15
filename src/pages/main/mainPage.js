@@ -18,11 +18,13 @@ const MainPage = () => {
             <div className={styled.main_menu}>
                 <Header></Header>
                 
-                <Routes>
-                    <Route path="/" element={<Board/>}/>
-                    <Route path="/all" element={<Board/>}/>
-                    <Route path="/my" element={<My/>}/>
-                </Routes>
+                <div className={styled.routes}>
+                    <Routes>
+                        <Route path="/" element={<Board/>}/>
+                        <Route path="/all" element={<Board/>}/>
+                        <Route path="/my" element={<My/>}/>
+                    </Routes>
+                </div>
             </div>
         </div>
     )

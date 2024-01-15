@@ -17,3 +17,11 @@
     height: 100%;
     min-height: 700px;
 }
+
+.routes {
+    width: calc(100% - 300px);
+    height: 90%;
+    max-height: 1200px;
+    min-height: 700px;
+    background-color: pink;
+}
