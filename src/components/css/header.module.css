@@ -1,0 +1,30 @@
+.header_container {
+    width: 300px;
+    height: 90%;
+    min-height: 700px;
+    background-color: lightblue;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 5px;
+    align-items: center;
+
+    padding-top: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header_btn {
+    background-color:rgb(108, 195, 221);
+    width: 250px;
+    height: 50px;
+
+    text-align: center;
+    line-height: 50px;
+
+    color: black;
+
+}
