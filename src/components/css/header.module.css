@@ -1,4 +1,5 @@
 .header_container {
+    position: relative;
     width: 300px;
     height: 90%;
     max-height: 1200px;
@@ -28,4 +29,19 @@ a {
 
     color: black;
 
+}
+
+.board_todo {
+    position: absolute;
+    bottom: 330px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 200px;
+
+    textarea {
+        width: 250px;
+        height: 150px;
+        font-size: 16px;
+        resize: none;
+      }
 }

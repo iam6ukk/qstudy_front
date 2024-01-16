@@ -6,9 +6,13 @@ import { useState } from "react";
 
 
 export const CalendarBox = styled.div`
+  position: absolute;
+  bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: left;
+  margin-top: 200px;
+  width: 258px;
 `;
 
 export const StyleCalendar = styled(Calendar)`
