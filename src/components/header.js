@@ -3,6 +3,8 @@ import styles from "./css/header.module.css";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import { useState } from "react";
+import Meeting from "../assets/meeting.png";
+import Sociology from "../assets/sociology.png";
 
 
 export const CalendarBox = styled.div`
@@ -57,36 +59,38 @@ export const StyleCalendar = styled(Calendar)`
 
 const Header = () => {
     const [today, setToday] = useState(new Date());
+    const [click, setClick] = useState("all");
 
     
     return (
         <div className={styles.header_container}>
             <div style={{marginTop: "20px"}}></div>
 
-            <Link to={"/main/all"}>
-                <div className={styles.header_btn}>
-                    전체 그룹
+            <Link to={"/main/all"} onClick={() => {setClick("all")}}>
+                <div className={click === "all" ? styles.header_btn_active : styles.header_btn}>
+                    <span>전체 그룹</span>
+                    
                 </div></Link>
 
             <div style={{marginTop: "20px"}}></div>
 
-            <Link to={"/main/my"}>
-                <div className={styles.header_btn}>
-                    내 그룹
+            <Link to={"/main/my"} onClick={() => {setClick("my")}}>
+                <div className={click === "my" ? styles.header_btn_active : styles.header_btn}>
+                    <span>내 그룹</span>
                 </div>
             </Link>
 
             <div style={{marginTop: "20px"}}></div>
             
-            <Link to={"/main/schedule"}>
-                <div className={styles.header_btn}>
-                    내 일정관리
+            <Link to={"/main/schedule"} onClick={() => {setClick("schedule")}}>
+                <div className={click === "schedule" ? styles.header_btn_active : styles.header_btn}>
+                    <span>내 일정관리</span>
                 </div>
             </Link>
 
             
             <div className={styles.board_todo}>
-                <label>내 할일</label>
+                <label>Todo List</label>
                 <textarea name="todo"></textarea>
             </div>
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Header from "../../components/header";
-import Board from "./board";
+import Board from "./all";
 import styled from "./css/mainPage.module.css"; 
 import My from "./my";
 import Schedule from "./schedule";

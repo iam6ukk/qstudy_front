@@ -12,6 +12,7 @@ const GroupList = () => {
             <div className={styled.filter}>
                 <input placeholder="제목 입력" className={styled.input}></input>
                 <button className={styled.btn}>검색</button>
+                <div className={styled.search_number}>검색 결과 <b>{list.length}</b>건</div>
             </div>
             <div className={styled.group_list}>
             {
