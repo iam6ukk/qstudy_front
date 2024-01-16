@@ -54,17 +54,6 @@ const Board = () => {
 
   return (
     <div className={styles.board_container}>
-      <div className={styles.board_sub}>
-        <div className={styles.board_todo}>
-          <label>내 할일</label>
-          <textarea name="todo"></textarea>
-        </div>
-        <div className={styles.board_calendar}>
-          <CalendarBox>
-            <StyleCalendar locale="en" value={today} />
-          </CalendarBox>
-        </div>
-      </div>
       <div className={styles.board_groups}>
         <lael>스터디 그룹 목록</lael>
         <GroupList></GroupList>
