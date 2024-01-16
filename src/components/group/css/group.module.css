@@ -1,6 +1,72 @@
-.group_card_container {
+.mygroup {
+    background-color: white;
     width: 80%;
-    height: 50px;
+    margin-left: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+    
+    margin-top: 20px;
+}
+
+.filter {
+    border-bottom: 3px solid black;
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+
+.input {
+    outline: 0;
+    background: #f2f2f2;
+    width: 200px;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 10px;
+    outline: 0px;
+    border: 0px solid lightgray;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.group_card_container {
+    transition: 0.3s;
+    cursor: pointer;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
     background-color: white;
     
+    & > div {
+        margin-left: 10px;
+    }
+}
+
+.group_card_container:hover {
+    background-color: rgba(236, 236, 236, 0.74);
+}
+
+.title {
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+}
+.contents {
+    height: 50px;
+}
+.writer {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
 }
