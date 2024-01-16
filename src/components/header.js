@@ -76,6 +76,14 @@ const Header = () => {
                 </div>
             </Link>
 
+            <div style={{marginTop: "20px"}}></div>
+            
+            <Link to={"/main/schedule"}>
+                <div className={styles.header_btn}>
+                    내 일정관리
+                </div>
+            </Link>
+
             
             <div className={styles.board_todo}>
                 <label>내 할일</label>

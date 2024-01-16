@@ -4,6 +4,7 @@ import Header from "../../components/header";
 import Board from "./board";
 import styled from "./css/mainPage.module.css"; 
 import My from "./my";
+import Schedule from "./schedule";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -23,6 +24,8 @@ const MainPage = () => {
                         <Route path="/" element={<Board/>}/>
                         <Route path="/all" element={<Board/>}/>
                         <Route path="/my" element={<My/>}/>
+                        <Route path="/schedule" element={<Schedule/>}/>
+                        
                     </Routes>
                 </div>
             </div>
