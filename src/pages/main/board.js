@@ -55,7 +55,7 @@ const Board = () => {
   return (
     <div className={styles.board_container}>
       <div className={styles.board_groups}>
-        <lael>스터디 그룹 목록</lael>
+        <p>스터디 그룹 목록</p>
         <GroupList></GroupList>
       </div>
     </div>
