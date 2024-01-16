@@ -13,7 +13,7 @@ const GroupList = () => {
                 <input placeholder="제목 입력" className={styled.input}></input>
                 <button className={styled.btn}>검색</button>
             </div>
-            <div>
+            <div className={styled.group_list}>
             {
                 list.map((item) => {
                     return (
