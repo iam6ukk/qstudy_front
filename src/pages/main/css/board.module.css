@@ -17,8 +17,10 @@
     margin-bottom: 5px;
   }
   textarea {
+    width: 340px;
     height: 200px;
     font-size: 16px;
+    resize: none;
   }
 }
 
