@@ -8,7 +8,11 @@ export const CalendarBox = styled(Calendar)`
   border: none;
   border-radius: 5px;
   width: auto;
-  height: 800px;
+  height: 90%;
+  min-height: 600px;
+  overflow: auto;
+  margin-top: 30px;
+  transition: 0.3s;
 
   // 달력 오늘 표시
   .react-calendar__tile--now {
@@ -39,22 +43,27 @@ export const CalendarBox = styled(Calendar)`
 
   // day 타일
   .react-calendar__tile {
+    
+    transition: 0.3s;
     height: 130px;
     font-size: 16px;
   }
 
   // day 타일 hover, focus
   .react-calendar__tile:enabled:hover {
+    transition: 0.3s;
     background-color: #dee2e6;
     border-radius: 100px;
   }
   .react-calendar__tile:enabled:focus {
+    transition: 0.3s;
     background-color: #a4c3b2;
     border-radius: 100px;
   }
 
   // 날짜 선택시, day 타일
   .react-calendar__tile--active {
+    transition: 0.3s;
     color: #fff;
     background-color: #a4c3b2;
     border-radius: 100px;
