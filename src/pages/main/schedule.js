@@ -14,7 +14,15 @@ export const CalendarBox = styled(Calendar)`
   margin-top: 30px;
   transition: 0.3s;
 
-
+  .dot {
+    height: 30px;
+    width: 30px;
+    background-color: #f87171;
+    border-radius: 50%;
+    display: flex;
+    position: absolute;
+    left: 1px;
+  }
 
   &::-webkit-scrollbar {
     width: 4px;  /* 스크롤바의 너비 */
@@ -85,10 +93,19 @@ export const CalendarBox = styled(Calendar)`
     border-radius: 100px;
   }
 `;
+const dateToString = (date) => {
+  let year = date.getFullYear();
+  let month = (date.getMonth() + 1).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
 
 const Schedule = () => {
   const [value, onChange] = useState(new Date());
-
+  let mark = [
+    new Date()
+  ]
   return (
     <div className={styles.schedule_conatiner}>
       <CalendarBox
@@ -97,6 +114,22 @@ const Schedule = () => {
         formatDay={(local, date) =>
           date.toLocaleString("en", { day: "numeric" })
         }
+        tileContent={({ date, view }) => { // 날짜 타일에 컨텐츠 추가하기 (html 태그)
+          // 추가할 html 태그를 변수 초기화
+          let html = [];
+          // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+          if (mark.find((x) => dateToString(x) === dateToString(date))) {
+            html.push(<div className="dot"></div>);
+          }
+          // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
+          return (
+            <>
+              <div className="flex justify-center items-center absoluteDiv">
+                {html}
+              </div>
+            </>
+          );
+        }}
       />
     </div>
   );
