@@ -14,6 +14,9 @@ export const CalendarBox = styled(Calendar)`
   margin-top: 30px;
   transition: 0.3s;
 
+  .dot_container {
+    position: relative;
+  }
   .dot {
     height: 30px;
     width: 30px;
@@ -21,7 +24,8 @@ export const CalendarBox = styled(Calendar)`
     border-radius: 50%;
     display: flex;
     position: absolute;
-    left: 1px;
+    top: 10px;
+    left: 43px;
   }
 
   &::-webkit-scrollbar {
@@ -119,7 +123,7 @@ const Schedule = () => {
           let html = [];
           // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
           if (mark.find((x) => dateToString(x) === dateToString(date))) {
-            html.push(<div className="dot"></div>);
+            html.push(<div className="dot_container"><div className="dot"></div></div>);
           }
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
           return (
