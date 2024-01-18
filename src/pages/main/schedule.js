@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import styles from "./css/schedule.module.css";
+import schedule from "../../components/schedule";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -37,10 +38,12 @@ export const CalendarBox = styled(Calendar)`
   .react-calendar__navigation__prev-button {
     width: 100px;
     font-size: 24px;
+    margin-left: 1.4%;
   }
   .react-calendar__navigation__next-button {
     width: 100px;
     font-size: 24px;
+    margin-right: 1.4%;
   }
 
   // 달력 섹션
@@ -88,10 +91,6 @@ export const CalendarBox = styled(Calendar)`
       padding: 10px;
     }
   }
-  .react-calendar__tile--now:enabled:hover {
-  }
-  .react-calendar__tile--now:enabled:focus {
-  }
 
   // 요일 hover, focus
   .react-calendar__tile:enabled:hover {
@@ -118,12 +117,16 @@ export const CalendarBox = styled(Calendar)`
   }
 
   // 요일 선택시
-  /* .react-calendar__tile--active {
-    transition: 0.3s;
-    color: #fff;
-    background-color: #a4c3b2;
-    border-radius: 100px;
-  } */
+  .react-calendar__tile--active {
+    background-color: #fff;
+
+    abbr {
+      background: #a4c3b2;
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px;
+    }
+  }
 `;
 const dateToString = (date) => {
   let year = date.getFullYear();
@@ -136,8 +139,10 @@ const dateToString = (date) => {
 const Schedule = () => {
   const [value, onChange] = useState(new Date());
   let mark = [new Date()];
+
   return (
     <div className={styles.schedule_conatiner}>
+      <Schedule />
       <CalendarBox
         onChange={onChange}
         value={value}
