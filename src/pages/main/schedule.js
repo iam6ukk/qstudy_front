@@ -8,11 +8,12 @@ export const CalendarBox = styled(Calendar)`
   border: none;
   border-radius: 5px;
   width: auto;
-  height: 90%;
-  min-height: 600px;
-  overflow: auto;
   margin-top: 30px;
   transition: 0.3s;
+  height: 90%;
+  //전체 컨테이너
+
+
 
   .dot_container {
     position: relative;
@@ -28,20 +29,10 @@ export const CalendarBox = styled(Calendar)`
     left: 43px;
   }
 
-  &::-webkit-scrollbar {
-    width: 4px;  /* 스크롤바의 너비 */
-  }
+  
 
-  &::-webkit-scrollbar-thumb {
-      height: 30%; /* 스크롤바의 길이 */
-      background: #a4c3b2; /* 스크롤바의 색상 */
-      
-      border-radius: 10px;
-  }
 
-  &::-webkit-scrollbar-track {
-      background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
-  }
+
   // 달력 오늘 표시
   .react-calendar__tile--now {
     background: #a4c3b2;
@@ -57,6 +48,26 @@ export const CalendarBox = styled(Calendar)`
   .react-calendar__navigation__label > span {
     font-size: 18px;
     font-weight: bold;
+  }
+  //전체 데이즈
+  .react-calendar__viewContainer {
+    overflow: auto;
+    height: 90%;
+
+    &::-webkit-scrollbar {
+    width: 4px;  /* 스크롤바의 너비 */
+  }
+
+    &::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #a4c3b2; /* 스크롤바의 색상 */
+        
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    }
   }
 
   // 요일
