@@ -3,7 +3,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import styles from "./css/schedule.module.css";
-import schedule from "../../components/schedule";
+import ScheduleModal from "../../components/scheduleModal";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -142,7 +142,7 @@ const Schedule = () => {
 
   return (
     <div className={styles.schedule_conatiner}>
-      <Schedule />
+      <ScheduleModal />
       <CalendarBox
         onChange={onChange}
         value={value}
