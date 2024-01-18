@@ -94,8 +94,10 @@ export const CalendarBox = styled(Calendar)`
   }
 
   // 요일 hover, focus
-  /* .react-calendar__tile:enabled:hover {
+  .react-calendar__tile:enabled:hover {
     transition: 0.3s;
+    background: #fff;
+
     abbr {
       background: #dee2e6;
       color: #000;
@@ -105,9 +107,15 @@ export const CalendarBox = styled(Calendar)`
   }
   .react-calendar__tile:enabled:focus {
     transition: 0.3s;
-    background-color: #a4c3b2;
-    border-radius: 100px;
-  } */
+    background-color: #fff;
+
+    abbr {
+      background: #a4c3b2;
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px;
+    }
+  }
 
   // 요일 선택시
   /* .react-calendar__tile--active {
