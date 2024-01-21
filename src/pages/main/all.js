@@ -1,9 +1,11 @@
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 import "react-calendar/dist/Calendar.css";
 import styles from "./css/board.module.css";
 import GroupList from "../../components/group/myGroupList";
+import { useRecoilState } from "recoil";
+import { groupInfoState } from "../../recoil/group/group_state";
 
 export const CalendarBox = styled.div`
   display: flex;
@@ -51,6 +53,16 @@ export const StyleCalendar = styled(Calendar)`
 `;
 const Board = () => {
   const [today, setToday] = useState(new Date());
+  let [list, setList] = useRecoilState(groupInfoState);
+
+  useEffect(() => {
+    setList([{
+      title: "흠",
+      contents: "흠",
+      wrtier: "222",
+      enter: false
+  }])
+  }, [])
 
   return (
     <div className={styles.board_container}>
