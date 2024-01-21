@@ -1,4 +1,5 @@
 .schedule_conatiner {
   padding: 20px;
   height: 100%;
+  position: relative;
 }

@@ -140,11 +140,17 @@ const Schedule = () => {
   const [value, onChange] = useState(new Date());
   let mark = [new Date()];
 
+  const [openModal, setOpenModal] = useState(false);
+  const showModal = () => {
+    setOpenModal(!openModal);
+  };
+
   return (
     <div className={styles.schedule_conatiner}>
-      <ScheduleModal />
+      {openModal ? <ScheduleModal /> : null}
       <CalendarBox
         onChange={onChange}
+        onClickDay={showModal}
         value={value}
         next2Label={null}
         prev2Label={null}
