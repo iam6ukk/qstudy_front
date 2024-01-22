@@ -55,14 +55,16 @@ const Board = () => {
   const [today, setToday] = useState(new Date());
   let [list, setList] = useRecoilState(groupInfoState);
 
+  async function group() {
+    const response = await fetch("http://localhost:8080/group/all");
+    const groupList = await response.json();
+    console.log(groupList);
+    setList(groupList);
+  }
+
   useEffect(() => {
-    setList([{
-      title: "흠",
-      contents: "흠",
-      wrtier: "222",
-      enter: false
-  }])
-  }, [])
+    group();
+  }, []);
 
   return (
     <div className={styles.board_container}>
