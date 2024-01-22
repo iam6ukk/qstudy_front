@@ -138,6 +138,8 @@ const dateToString = (date) => {
 
 const Schedule = () => {
   const [value, onChange] = useState(new Date());
+  const outside = useRef(null);
+
   let mark = [new Date()];
 
   const [openModal, setOpenModal] = useState(false);
@@ -145,8 +147,9 @@ const Schedule = () => {
     setOpenModal(true);
   };
 
-  const outside = useRef();
   useEffect(() => {
+
+    console.log(outside.current);
     const handleClick = (e) => {
       if (outside.current && !outside.current.contains(e.target)) {
         setOpenModal(false);
@@ -157,10 +160,10 @@ const Schedule = () => {
   }, [outside]);
 
   return (
-    <div className={styles.schedule_conatiner}>
+    <div className={styles.schedule_conatiner}
+      ref={outside}>
       {openModal ? <ScheduleModal setOpenModal={setOpenModal} /> : null}
       <CalendarBox
-        ref={outside}
         onChange={onChange}
         onClickDay={showModal}
         value={value}

@@ -9,6 +9,14 @@
   left: 160px;
   z-index: 100;
 }
+
+.scheduler_block {
+  position: absolute;
+  width: 95%;
+  height: 90%;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .close_btn {
   width: 20px;
   height: 20px;

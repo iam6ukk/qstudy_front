@@ -16,6 +16,7 @@ const onOk = (value) => {
 
 const scheduleModal = ({ setOpenModal }) => {
   return (
+    <>
     <div className={styles.scheduler_container}>
       <button
         className={styles.close_btn}
@@ -80,6 +81,9 @@ const scheduleModal = ({ setOpenModal }) => {
         </div>
       </div>
     </div>
+    <div className={styles.scheduler_block}></div>
+    </>
+    
   );
 };
 
