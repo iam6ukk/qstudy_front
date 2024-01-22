@@ -14,12 +14,17 @@ const onOk = (value) => {
   console.log("onOk: ", value);
 };
 
-const scheduleModal = () => {
+const scheduleModal = ({ setOpenModal }) => {
   return (
     <div className={styles.scheduler_container}>
+      <button
+        className={styles.close_btn}
+        onClick={() => setOpenModal(false)}
+      ></button>
       <div className={styles.title_wrap}>
         <input type="text"></input>
-        <Space direction="vertical" size={12}>
+
+        <Space direction="vertical" size={20}>
           <RangePicker
             showTime={{
               format: "HH:mm",
@@ -27,6 +32,10 @@ const scheduleModal = () => {
             format="YYYY-MM-DD HH:mm"
             onChange={onChange}
             onOk={onOk}
+            style={{
+              width: 558,
+              fontSize: "20px",
+            }}
           />
         </Space>
       </div>
@@ -36,9 +45,10 @@ const scheduleModal = () => {
           <Select
             showSearch
             style={{
-              width: 200,
+              width: 280,
+              height: 40,
             }}
-            placeholder="Search to Select"
+            placeholder="그룹 선택"
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option?.label ?? "").includes(input)
@@ -66,6 +76,7 @@ const scheduleModal = () => {
         </div>
         <div className={styles.memo}>
           <span>메모</span>
+          <textarea />
         </div>
       </div>
     </div>

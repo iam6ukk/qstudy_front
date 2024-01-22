@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
@@ -142,13 +142,25 @@ const Schedule = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const showModal = () => {
-    setOpenModal(!openModal);
+    setOpenModal(true);
   };
+
+  const outside = useRef();
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (outside.current && !outside.current.contains(e.target)) {
+        setOpenModal(false);
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [outside]);
 
   return (
     <div className={styles.schedule_conatiner}>
-      {openModal ? <ScheduleModal /> : null}
+      {openModal ? <ScheduleModal setOpenModal={setOpenModal} /> : null}
       <CalendarBox
+        ref={outside}
         onChange={onChange}
         onClickDay={showModal}
         value={value}
