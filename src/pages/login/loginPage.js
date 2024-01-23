@@ -1,13 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from "../../components/google.js"
 import GithubButton from "../../components/github.js"
 
 import styles from './css/login.module.css'
+import { useCookies } from 'react-cookie';
 
 const LoginPage = () => {
-
+    const [cookies, setCookie] = useCookies();
     const navigate = useNavigate();
+    const codeCheck = async (location) => {
+
+        let params = new URLSearchParams(location.search);
+        let code = params.get("code");
+        if(code === null) return;
+
+        let response = await fetch(`http://localhost:8080/login/github?code=${code}`, {
+            method: "GET"
+        });
+        let json = await response.json();
+        const time = 3600; //1시간
+        const expiration = new Date(Date.now() + time * 1000);
+
+        setCookie("login", {
+            id: json.id,
+            picture: json.avatar_url,
+            nickname: json.login,
+            email: json.email
+        }, {
+            path: "/",
+            expires: expiration
+        })
+        console.log("Setup Cookie");
+        navigate("/main")
+    }
+
+    useEffect(() => {
+      codeCheck(window.location)
+    }, [])
 
     return (
         <div className={styles.login_container}>

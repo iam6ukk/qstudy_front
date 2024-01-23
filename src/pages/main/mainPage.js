@@ -19,7 +19,7 @@ const MainPage = () => {
         if(cookies["login"] === undefined) {
             alert("로그인이 필요합니다");
             //navigate('/login')
-
+            //개발용 임시 설정
              setCookie("login", {
                 id: "tester",
                 token: "abcd1234"
