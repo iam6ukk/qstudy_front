@@ -15,6 +15,7 @@ const GoogleLoginButton = () => {
       const decodedToken = jwtDecode(res.credential);
       //console.log(decodedToken);
 
+
       await fetch("http://localhost:8080/login/google", {
         method: "POST",
         headers: {
@@ -25,7 +26,7 @@ const GoogleLoginButton = () => {
       
       const time = 3600; //1시간
       const expiration = new Date(Date.now() + time * 1000);
-
+      //로그인 쿠키 설정
         setCookie("login", {
             id: decodedToken.sub,
             picture: decodedToken.picture,
