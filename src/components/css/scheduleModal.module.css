@@ -44,6 +44,10 @@
   margin-top: 20px;
   margin-bottom: 15px;
 }
+.title_wrap > input::placeholder {
+  color: lightgray;
+  font-size: 16px;
+}
 
 .etc_wrap {
   margin-top: 20px;
@@ -67,8 +71,22 @@
   outline: 0px;
   border: 1px solid lightgray;
   width: 258px;
-  height: 135px;
+  height: 90px;
   font-size: 16px;
   resize: none;
   margin-left: 20px;
+}
+.modal_btn {
+  text-align: right;
+  margin-right: 20px;
+}
+.modal_btn .ok_btn {
+  width: 50px;
+  height: 30px;
+  margin-top: 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background: #b5e6e0;
+  cursor: pointer;
 }
