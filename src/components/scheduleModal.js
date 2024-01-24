@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./css/scheduleModal.module.css";
 
 import { DatePicker, Space } from "antd";
@@ -14,7 +14,28 @@ const onOk = (value) => {
   console.log("onOk: ", value);
 };
 
-const scheduleModal = ({ setOpenModal }) => {
+
+
+const ScheduleModal = ({ setOpenModal }) => {
+  let outside = useRef();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      const rect = outside.current.getBoundingClientRect();
+      const isClickOutside = (
+        e.clientX < rect.left || e.clientX > rect.right ||
+        e.clientY < rect.top || e.clientY > rect.bottom
+      );
+
+      if (outside.current && isClickOutside) {
+        setOpenModal(false);
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [outside]);
+
+
   return (
     <>
       <div className={styles.scheduler_container}>
@@ -89,9 +110,9 @@ const scheduleModal = ({ setOpenModal }) => {
           </div>
         </div>
       </div>
-      <div className={styles.scheduler_block}></div>
+      <div className={styles.scheduler_block} ref={outside}></div>
     </>
   );
 };
 
-export default scheduleModal;
+export default ScheduleModal;

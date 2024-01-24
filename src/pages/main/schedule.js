@@ -147,21 +147,8 @@ const Schedule = () => {
     setOpenModal(true);
   };
 
-  useEffect(() => {
-
-    console.log(outside.current);
-    const handleClick = (e) => {
-      if (outside.current && !outside.current.contains(e.target)) {
-        setOpenModal(false);
-      }
-    };
-    window.addEventListener("mousedown", handleClick);
-    return () => window.removeEventListener("mousedown", handleClick);
-  }, [outside]);
-
   return (
-    <div className={styles.schedule_conatiner}
-      ref={outside}>
+    <div className={styles.schedule_conatiner} ref={outside}>
       {openModal ? <ScheduleModal setOpenModal={setOpenModal} /> : null}
       <CalendarBox
         onChange={onChange}
