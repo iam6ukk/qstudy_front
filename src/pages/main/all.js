@@ -19,7 +19,6 @@ const Board = () => {
   async function group(id) {
     const response = await fetch(`http://localhost:8080/group/all?id=${id}`);
     const groupList = await response.json();
-    console.log(groupList);
     setList(groupList);
   }
 
@@ -34,12 +33,16 @@ const Board = () => {
     group(id);
   }, []);
 
+
   return (
-    <div className={styles.board_container}>
+    <>
+    <div className={styles.board_container} >
       <div className={styles.board_groups}>
         <GroupList></GroupList>
       </div>
     </div>
+    </>
+   
   );
 };
 

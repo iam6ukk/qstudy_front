@@ -4,6 +4,8 @@ import { ColorPicker, theme } from "antd";
 import styles from "./css/groupAddMoal.module.css";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useRecoilState } from "recoil";
+import { groupInfoState } from "../../recoil/group/group_state";
 const genPresets = (presets = presetPalettes) =>
   Object.entries(presets).map(([label, colors]) => ({
     label,
@@ -14,6 +16,7 @@ const GroupAddModal = ({ setOpenModal, data }) => {
   const { token } = theme.useToken();
   const [color, setColor] = useState("#1677ff");
   const [cookies, setCookie] = useCookies();
+  let [list, setList] = useRecoilState(groupInfoState);
 
   const presets = genPresets({
     primary: generate(token.colorPrimary),
@@ -34,11 +37,13 @@ const GroupAddModal = ({ setOpenModal, data }) => {
         group_id: data.group_id,
         color: color
       })
-    }).catch((err) => {
-      console.log(err);
-    })
+    });
 
     alert(`[${data.title}] 참가되었습니다`);
+    
+    const response = await fetch(`http://localhost:8080/group/all?id=${cookies["login"].id}`);
+    const groupList = await response.json();
+    setList(groupList);
 
     } catch(error) {
       alert("오류가 발생했습니다.");
