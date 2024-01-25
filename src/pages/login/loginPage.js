@@ -32,7 +32,7 @@ const LoginPage = () => {
             expires: expiration
         })
         console.log("Setup Cookie");
-        navigate("/main")
+        navigate("/main/all")
     }
 
     useEffect(() => {
