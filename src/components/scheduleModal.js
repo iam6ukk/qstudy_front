@@ -3,6 +3,7 @@ import styles from "./css/scheduleModal.module.css";
 
 import { DatePicker, Space } from "antd";
 import { Select } from "antd";
+import axios from "axios";
 const { RangePicker } = DatePicker;
 
 // 일자, 시간 선택
@@ -14,18 +15,17 @@ const onOk = (value) => {
   console.log("onOk: ", value);
 };
 
-
-
 const ScheduleModal = ({ setOpenModal }) => {
   let outside = useRef();
 
   useEffect(() => {
     const handleClick = (e) => {
       const rect = outside.current.getBoundingClientRect();
-      const isClickOutside = (
-        e.clientX < rect.left || e.clientX > rect.right ||
-        e.clientY < rect.top || e.clientY > rect.bottom
-      );
+      const isClickOutside =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
 
       if (outside.current && isClickOutside) {
         setOpenModal(false);
@@ -35,6 +35,10 @@ const ScheduleModal = ({ setOpenModal }) => {
     return () => window.removeEventListener("mousedown", handleClick);
   }, [outside]);
 
+  // 내 그룹 데이터
+  // const myGroupGet = () => {
+  //   axios.get
+  // }
 
   return (
     <>
@@ -66,6 +70,7 @@ const ScheduleModal = ({ setOpenModal }) => {
             <span>분류</span>
             <Select
               showSearch
+              defaultValue="1"
               style={{
                 width: 280,
                 height: 40,

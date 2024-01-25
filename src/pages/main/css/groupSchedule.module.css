@@ -1,0 +1,15 @@
+.schedule_container {
+  padding: 20px;
+  height: 96%;
+  position: relative;
+}
+.prev_btn {
+  font-size: 18px;
+  padding-top: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.prev_btn:hover {
+  font-weight: bold;
+}
