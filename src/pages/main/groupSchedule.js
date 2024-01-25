@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import styles from "./css/groupSchedule.module.css";
+import ScheduleModal from "../../components/scheduleModal";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -140,13 +142,21 @@ const GroupSchedule = () => {
   const [value, onChange] = useState(new Date());
   const navigate = useNavigate();
   let mark = [new Date()];
+
+  const [openModal, setOpenModal] = useState(false);
+  const showModal = () => {
+    setOpenModal(true);
+  };
+
   return (
-    <div>
-      <div className="styles.prev_btn" onClick={() => navigate("/main/my")}>
-        {"<"}
-      </div>
+    <div className={styles.schedule_container}>
+      <button className={styles.prev_btn} onClick={() => navigate("/main/my")}>
+        {"<"} 이전
+      </button>
+      {openModal ? <ScheduleModal setOpenModal={setOpenModal} /> : null}
       <CalendarBox
         onChange={onChange}
+        onClickDay={showModal}
         value={value}
         next2Label={null}
         prev2Label={null}
