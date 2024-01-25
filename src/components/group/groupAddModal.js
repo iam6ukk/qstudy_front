@@ -1,21 +1,42 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { generate, green, presetPalettes, red } from "@ant-design/colors";
 import { ColorPicker, theme } from "antd";
 import styles from "./css/groupAddMoal.module.css";
+import { useParams } from "react-router-dom";
 const genPresets = (presets = presetPalettes) =>
   Object.entries(presets).map(([label, colors]) => ({
     label,
     colors,
   }));
 
-const groupAddModal = ({ setOpenModal, data }) => {
+const GroupAddModal = ({ setOpenModal, data }) => {
   const { token } = theme.useToken();
   const presets = genPresets({
     primary: generate(token.colorPrimary),
     red,
     green,
   });
+  const outside = useRef(null);
+  useEffect(() => {
+    const handleClick = (e) => {
+      const rect = outside.current.getBoundingClientRect();
+      const isClickOutside = (
+        e.clientX < rect.left || e.clientX > rect.right ||
+        e.clientY < rect.top || e.clientY > rect.bottom
+      );
+
+      if (outside.current && isClickOutside) {
+        setOpenModal(false);
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [outside]);
+
+
+
   return (
+    <>
     <div className={styles.add_container}>
       <button
         className={styles.close_btn}
@@ -39,7 +60,10 @@ const groupAddModal = ({ setOpenModal, data }) => {
         <button onClick={() => setOpenModal(false)}>확인</button>
       </div>
     </div>
+    <div className={styles.group_block} ref={outside}></div>
+    </>
+    
   );
 };
 
-export default groupAddModal;
+export default GroupAddModal;

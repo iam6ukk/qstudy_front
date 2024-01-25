@@ -23,11 +23,9 @@ const My = () => {
   }, []);
 
   return (
-    <div>
-      <div className={styles.board_container}>
-        <div className={styles.board_groups}>
-          <GroupList></GroupList>
-        </div>
+    <div className={styles.board_container}>
+      <div className={styles.board_groups}>
+        <GroupList></GroupList>
       </div>
     </div>
   );
