@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { generate, green, presetPalettes, red } from "@ant-design/colors";
 import { ColorPicker, theme } from "antd";
 import styles from "./css/groupAddMoal.module.css";
 import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 const genPresets = (presets = presetPalettes) =>
   Object.entries(presets).map(([label, colors]) => ({
     label,
@@ -11,11 +12,57 @@ const genPresets = (presets = presetPalettes) =>
 
 const GroupAddModal = ({ setOpenModal, data }) => {
   const { token } = theme.useToken();
+  const [color, setColor] = useState("#1677ff");
+  const [cookies, setCookie] = useCookies();
+
   const presets = genPresets({
     primary: generate(token.colorPrimary),
     red,
     green,
   });
+
+  const submit = async () => {
+    setOpenModal(false);
+    try { 
+      await fetch(`http://localhost:8080/group/attend`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: cookies["login"].id.toString(),
+        group_id: data.group_id,
+        color: color
+      })
+    }).catch((err) => {
+      console.log(err);
+    })
+
+    alert(`[${data.title}] 참가되었습니다`);
+
+    } catch(error) {
+      alert("오류가 발생했습니다.");
+    }
+  }
+
+  const RGBtoHex = (r, g, b) => {
+    const toHex = (c) => {
+      const hex = c.toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return '#' + toHex(r) + toHex(g) + toHex(b);
+  };
+
+  const colorChange = (color_) => {
+    let color_code = color_.metaColor;
+    let a = Math.floor(color_code.a);
+    let r = Math.floor(color_code.r);
+    let g = Math.floor(color_code.g);
+    let b = Math.floor(color_code.b);
+
+    setColor(RGBtoHex(r, g, b));
+  }
+
   const outside = useRef(null);
   useEffect(() => {
     const handleClick = (e) => {
@@ -48,7 +95,7 @@ const GroupAddModal = ({ setOpenModal, data }) => {
       <div className={styles.content_wrap}>
         <div className={styles.content1}>
           <div className={styles.group_color}>
-            <ColorPicker presets={presets} defaultValue="#1677ff" />
+            <ColorPicker presets={presets} defaultValue="#1677ff" onChange={(color) => {colorChange(color)}}/>
           </div>
           <p className={styles.group_title}>{data.title}</p>
         </div>
@@ -57,7 +104,7 @@ const GroupAddModal = ({ setOpenModal, data }) => {
         </div>
       </div>
       <div className={styles.ok_btn}>
-        <button onClick={() => setOpenModal(false)}>확인</button>
+        <button onClick={() => submit()}>확인</button>
       </div>
     </div>
     <div className={styles.group_block} ref={outside}></div>

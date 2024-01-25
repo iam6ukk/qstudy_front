@@ -15,7 +15,7 @@ const LoginPage = () => {
         let code = params.get("code");
         if(code === null) return;
 
-        let response = await fetch(`http://localhost:8080/login/github?code=${code}`, {
+        let response = await fetch(`${process.env.REACT_APP_DEV_PATH}/login/github?code=${code}`, {
             method: "GET"
         });
         let json = await response.json();
