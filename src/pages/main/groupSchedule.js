@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export const CalendarBox = styled(Calendar)`
@@ -137,9 +138,13 @@ const dateToString = (date) => {
 
 const GroupSchedule = () => {
   const [value, onChange] = useState(new Date());
+  const navigate = useNavigate();
   let mark = [new Date()];
   return (
     <div>
+      <div className="styles.prev_btn" onClick={() => navigate("/main/my")}>
+        {"<"}
+      </div>
       <CalendarBox
         onChange={onChange}
         value={value}
