@@ -27,8 +27,13 @@ const GroupList = () => {
                     <GroupAddModal setOpenModal={setOpenModal} data={data} />
                 ) : null}
                 <div className={styled.filter}>
-                    <input placeholder="제목 입력" className={styled.input}></input>
-                    <button className={styled.btn}>검색</button>
+                    <div className={styled.groupAllTitle}>
+                        {url === "all" ? "모두의 스터디":"나의 스터디"}
+                    </div>
+                    <div className={styled.groupAllSearch}>
+                        <input placeholder="제목 입력" className={styled.input}></input>
+                        <button className={styled.btn}>검색</button>    
+                    </div>
                     <div className={styled.search_number}>검색 결과 <b>{list.length}</b>건</div>
                 </div>
                 <div className={styled.group_list}>

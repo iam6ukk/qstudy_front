@@ -7,15 +7,16 @@ import GroupList from "../../components/group/myGroupList";
 import { useRecoilState } from "recoil";
 import { groupInfoState } from "../../recoil/group/group_state";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Board = () => {
   const [today, setToday] = useState(new Date());
   let [list, setList] = useRecoilState(groupInfoState);
   let [cookies, setCookie] = useCookies();
+  let navigation = useNavigate();
 
-  let id = cookies["login"].id;
 
-  async function group() {
+  async function group(id) {
     const response = await fetch(`http://localhost:8080/group/all?id=${id}`);
     const groupList = await response.json();
     console.log(groupList);
@@ -23,7 +24,13 @@ const Board = () => {
   }
 
   useEffect(() => {
-    group();
+    if(cookies["login"] === undefined) {
+      alert("로그인이 필요합니다");
+      navigation('/login')
+      return;
+    }
+    let id = cookies["login"].id;
+    group(id);
   }, []);
 
   return (

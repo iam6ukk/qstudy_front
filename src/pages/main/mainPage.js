@@ -15,22 +15,6 @@ const MainPage = () => {
 
     //로그인 체크 (추후 개발)
     useEffect(() => {
-        //쿠키가 존재하지 않을 때
-        if(cookies["login"] === undefined) {
-            alert("로그인이 필요합니다");
-            //navigate('/login')
-            //개발용 임시 설정
-             setCookie("login", {
-                id: "tester",
-                token: "abcd1234"
-            }, {
-                path: "/",
-                expires: expiration 
-            })
-        } else {
-            //id 유효성 체크 필요
-           
-        }
 
     }, [])
 
