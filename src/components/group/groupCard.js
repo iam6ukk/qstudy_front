@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import styled from "./css/group.module.css";
 import { useNavigate } from "react-router-dom";
+import "./css/groupGlobal.css";
 
 const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   const navigate = useNavigate();
@@ -14,9 +15,9 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   };
 
   const mouseMove = (e) => {};
-
   return (
     <div
+      id={item.group_id}
       className={styled.group_card_container}
       onClick={showModal}
       onMouseMove={mouseMove}

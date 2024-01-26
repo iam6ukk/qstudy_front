@@ -21,6 +21,7 @@ const GroupList = () => {
   }, []);
 
   const navigate = useNavigate();
+  console.log("LIST : ", list)
 
   return (
     <>

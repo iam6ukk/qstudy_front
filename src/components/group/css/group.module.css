@@ -88,6 +88,7 @@
 }
 
 .group_list {
+  transition: 0.3s;
   display: flex;
   flex-wrap: wrap;
   overflow: auto;

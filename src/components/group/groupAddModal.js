@@ -27,6 +27,7 @@ const GroupAddModal = ({ setOpenModal, data }) => {
   const submit = async () => {
     setOpenModal(false);
     try { 
+      
       await fetch(`http://localhost:8080/group/attend`, {
       method: "POST",
       headers: {
@@ -38,12 +39,21 @@ const GroupAddModal = ({ setOpenModal, data }) => {
         color: color
       })
     });
+    
 
     alert(`[${data.title}] 참가되었습니다`);
-    
-    const response = await fetch(`http://localhost:8080/group/all?id=${cookies["login"].id}`);
-    const groupList = await response.json();
-    setList(groupList);
+    let doc = document.querySelector(`#${data.group_id}`);
+    doc.classList.add("group_hide");
+    console.log(doc);
+
+    console.log("READY");
+    setTimeout(async() => {
+      const response = await fetch(`http://localhost:8080/group/all?id=${cookies["login"].id}`);
+      const groupList = await response.json();
+      setList(groupList);
+      console.log("OK", groupList);
+
+    }, 1200)
 
     } catch(error) {
       alert("오류가 발생했습니다.");
