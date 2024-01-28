@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Cookies, useCookies } from "react-cookie";
 import styles from "./css/scheduleModal.module.css";
 
 import { DatePicker, Space } from "antd";
 import { Select } from "antd";
 import axios from "axios";
+import { async } from "q";
 const { RangePicker } = DatePicker;
 
 // 일자, 시간 선택
@@ -15,8 +17,11 @@ const onOk = (value) => {
   console.log("onOk: ", value);
 };
 
-const ScheduleModal = ({ setOpenModal }) => {
+const ScheduleModal = ({ setOpenModal, groupId }) => {
   let outside = useRef();
+  let [cookies, setCookie] = useCookies();
+  const [group, setGroup] = useState([]);
+  const [select, setSelect] = useState([]);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -36,9 +41,39 @@ const ScheduleModal = ({ setOpenModal }) => {
   }, [outside]);
 
   // 내 그룹 데이터
-  // const myGroupGet = () => {
-  //   axios.get
-  // }
+  async function groupData(id) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/group/my?id=${id}`
+      );
+      console.log("일정관리 분류: ", response.data);
+      setGroup(response.data);
+    } catch (error) {
+      console.error("error: ", error);
+    }
+  }
+  useEffect(() => {
+    let id = cookies["login"].id;
+    groupData(id);
+    console.log(groupId);
+    setSelect(
+      groupId === undefined || groupId === ""
+        ? group.map((item) => {
+            return {
+              label: item.title,
+              value: item.group_id,
+            };
+          })
+        : group
+            .filter((prev) => prev.group_id === groupId)
+            .map((item) => {
+              return {
+                label: item.title,
+                value: item.group_id,
+              };
+            })
+    );
+  }, [groupId]);
 
   return (
     <>
@@ -70,7 +105,6 @@ const ScheduleModal = ({ setOpenModal }) => {
             <span>분류</span>
             <Select
               showSearch
-              defaultValue="1"
               style={{
                 width: 280,
                 height: 40,
@@ -85,20 +119,7 @@ const ScheduleModal = ({ setOpenModal }) => {
                   .toLowerCase()
                   .localeCompare((optionB?.label ?? "").toLowerCase())
               }
-              options={[
-                {
-                  value: "1",
-                  label: "C언어 우웩",
-                },
-                {
-                  value: "2",
-                  label: "세상안녕 언제까지해",
-                },
-                {
-                  value: "3",
-                  label: "코딩 싫어요",
-                },
-              ]}
+              options={select}
             />
           </div>
           <div className={styles.memo}>

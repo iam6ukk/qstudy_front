@@ -5,11 +5,9 @@ import "./css/groupGlobal.css";
 
 const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   const navigate = useNavigate();
-  
-
   const showModal = () => {
     if (url === "my") {
-      navigate("/main/my/group");
+      navigate("/main/my/group", { state: { groupId: item.group_id } });
     } else if (url === "all") {
       setOpenModal(true);
       setData(item);
@@ -27,7 +25,10 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
       <div className={styled.title}>{item.title}</div>
       <div className={styled.contents}>{item.memo}</div>
       <div className={styled.writer}>작성자 : {item.writer}</div>
-      <div className={styled.color} style={{backgroundColor: item.color}}></div>
+      <div
+        className={styled.color}
+        style={{ backgroundColor: item.color }}
+      ></div>
     </div>
   );
 };
