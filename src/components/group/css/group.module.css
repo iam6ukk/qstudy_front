@@ -59,6 +59,7 @@
 
 .group_card_container {
 
+  top: 0px;
   transition: 0.3s;
   cursor: pointer;
 
@@ -83,7 +84,7 @@
 
 .group_card_container:hover {
   z-index: 10;
-  margin-top: 13px;
+  top: -13px;
   box-shadow: 0px 20px 20px lightgray;
 }
 
