@@ -23,7 +23,9 @@ const GroupList = () => {
   }, []);
 
   const navigate = useNavigate();
-  console.log("LIST : ", list)
+  const search = () => {
+
+  }
 
   return (
     <>
@@ -37,7 +39,7 @@ const GroupList = () => {
           </div>
           <div className={styled.groupAllSearch}>
             <input placeholder="제목 입력" className={styled.input}></input>
-            <button className={styled.btn}>검색</button>
+            <button className={styled.btn} onClick={() => {search()}}>검색</button>
           </div>
           <div className={styled.search_number}>
             검색 결과 <b>{list.length - minus}</b>건

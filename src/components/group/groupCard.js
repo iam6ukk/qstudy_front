@@ -6,9 +6,6 @@ import "./css/groupGlobal.css";
 const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   const navigate = useNavigate();
   
-  useEffect(() => {
-    console.log("ITEM :" , item);
-  }, [])
 
   const showModal = () => {
     if (url === "my") {
