@@ -5,6 +5,7 @@ import "./css/groupGlobal.css";
 
 const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   const navigate = useNavigate();
+  
   const showModal = () => {
     if (url === "my") {
       navigate("/main/my/group");

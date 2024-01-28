@@ -5,7 +5,7 @@ import styles from "./css/groupAddMoal.module.css";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useRecoilState } from "recoil";
-import { groupInfoState } from "../../recoil/group/group_state";
+import { groupInfoState, groupMinusState } from "../../recoil/group/group_state";
 const genPresets = (presets = presetPalettes) =>
   Object.entries(presets).map(([label, colors]) => ({
     label,
@@ -16,7 +16,8 @@ const GroupAddModal = ({ setOpenModal, data }) => {
   const { token } = theme.useToken();
   const [color, setColor] = useState("#1677ff");
   const [cookies, setCookie] = useCookies();
-  let [list, setList] = useRecoilState(groupInfoState);
+  const [list, setList] = useRecoilState(groupInfoState);
+  const [minus, setMinuse] = useRecoilState(groupMinusState);
 
   const presets = genPresets({
     primary: generate(token.colorPrimary),
@@ -45,15 +46,8 @@ const GroupAddModal = ({ setOpenModal, data }) => {
     let doc = document.querySelector(`#${data.group_id}`);
     doc.classList.add("group_hide");
     console.log(doc);
+    setMinuse(minus + 1);
 
-    console.log("READY");
-    setTimeout(async() => {
-      const response = await fetch(`http://localhost:8080/group/all?id=${cookies["login"].id}`);
-      const groupList = await response.json();
-      setList(groupList);
-      console.log("OK", groupList);
-
-    }, 1200)
 
     } catch(error) {
       alert("오류가 발생했습니다.");

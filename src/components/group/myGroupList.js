@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import GroupCard from "./groupCard";
-import { groupInfoState } from "../../recoil/group/group_state";
+import { groupInfoState, groupMinusState } from "../../recoil/group/group_state";
 import styled from "./css/group.module.css";
 import GroupAddModal from "./groupAddModal.js";
 import { useEffect, useRef, useState } from "react";
@@ -11,11 +11,13 @@ import GroupSchedule from "../../pages/main/groupSchedule";
 const GroupList = () => {
   const [list, setList] = useRecoilState(groupInfoState);
   const [data, setData] = useState({});
+  const [minus, setMinuse] = useRecoilState(groupMinusState);
   const [openModal, setOpenModal] = useState(false);
 
   let params = useParams();
   let [url, setUrl] = useState(null);
   useEffect(() => {
+    setMinuse(0);
     params = params["*"];
     setUrl(params);
   }, []);
@@ -38,7 +40,7 @@ const GroupList = () => {
             <button className={styled.btn}>검색</button>
           </div>
           <div className={styled.search_number}>
-            검색 결과 <b>{list.length}</b>건
+            검색 결과 <b>{list.length - minus}</b>건
           </div>
         </div>
         <div className={styled.group_list}>

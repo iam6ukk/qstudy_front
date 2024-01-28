@@ -7,3 +7,8 @@ export const groupInfoState = atom({
        
     ]
 });
+
+export const groupMinusState = atom({
+    key: 'groupMinus',
+    default: 0
+})
