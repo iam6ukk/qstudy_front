@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import styles from "./css/groupSchedule.module.css";
 import ScheduleModal from "../../components/scheduleModal";
@@ -138,22 +138,39 @@ const dateToString = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-const GroupSchedule = () => {
+const GroupSchedule = ({ route }) => {
   const [value, onChange] = useState(new Date());
   const navigate = useNavigate();
   let mark = [new Date()];
+
+  const [groupId, setGroupId] = useState("");
 
   const [openModal, setOpenModal] = useState(false);
   const showModal = () => {
     setOpenModal(true);
   };
 
+  // 1. useLocation 훅 취득
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state.groupId === undefined) {
+      return;
+    }
+    const id = location.state.groupId;
+
+    console.log("groupId: ", id);
+    setGroupId(id);
+  }, []);
+
   return (
     <div className={styles.schedule_container}>
       <button className={styles.prev_btn} onClick={() => navigate("/main/my")}>
         {"<"} 이전
       </button>
-      {openModal ? <ScheduleModal setOpenModal={setOpenModal} /> : null}
+      {openModal ? (
+        <ScheduleModal setOpenModal={setOpenModal} groupId={groupId} />
+      ) : null}
       <CalendarBox
         onChange={onChange}
         onClickDay={showModal}
