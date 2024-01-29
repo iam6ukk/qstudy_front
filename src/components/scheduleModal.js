@@ -9,15 +9,6 @@ import { async } from "q";
 import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 
-// 일자, 시간 선택
-const onChange = (value, dateString) => {
-  console.log("Selected Time: ", value);
-  console.log("Formatted Selected Time: ", dateString);
-};
-const onOk = (value) => {
-  console.log("onOk: ", value);
-};
-
 const ScheduleModal = ({ setOpenModal, groupId }) => {
   let outside = useRef();
   let [cookies, setCookie] = useCookies();
@@ -25,6 +16,31 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
   const [selectList, setSelectList] = useState([]);
   const [select, setSelect] = useState({});
   const navigation = useNavigate();
+
+  const [title, setTitle] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [memo, setMemo] = useState("");
+
+  // 일자, 시간 선택
+  const onChange = (value, dateString) => {
+    console.log("Selected Time: ", value);
+    console.log("Formatted Selected Time: ", dateString);
+    setStartDate(dateString[0]);
+    setEndDate(dateString[1]);
+  };
+  const onOk = (value) => {
+    console.log("onOk: ", value);
+  };
+
+  const titleChange = (e) => {
+    setTitle(e.target.value);
+    console.log("event title: ", title);
+  };
+  const memoChange = (e) => {
+    setMemo(e.target.value);
+    console.log("event memo: ", memo);
+  };
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -53,21 +69,22 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
       let groupData = response.data;
       setGroup(groupData);
 
-      let data = groupId === undefined || groupId === ""
-      ? groupData.map((item) => {
-          return {
-            label: item.title,
-            value: item.group_id,
-          };
-        })
-      : groupData
-          .filter((prev) => prev.group_id === groupId)
-          .map((item) => {
-            return {
-              label: item.title,
-              value: item.group_id,
-            };
-          })
+      let data =
+        groupId === undefined || groupId === ""
+          ? groupData.map((item) => {
+              return {
+                label: item.title,
+                value: item.group_id,
+              };
+            })
+          : groupData
+              .filter((prev) => prev.group_id === groupId)
+              .map((item) => {
+                return {
+                  label: item.title,
+                  value: item.group_id,
+                };
+              });
       setSelectList(data);
       setSelect(data.length === 0 ? {} : data[0]);
 
@@ -76,15 +93,37 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
       console.error("error: ", error);
     }
   }
+
+  async function eventPost() {
+    try {
+      const event = {
+        user_id: cookies["login"].id.toString(),
+        group_id: select.value,
+        title: title,
+        start_date: startDate,
+        end_date: endDate,
+        memo: memo,
+      };
+      axios
+        .post("http://localhost:8080/calendar/event", event)
+        .then((response) => {
+          console.log(response);
+        });
+    } catch (error) {
+      console.error("error: ", error);
+    }
+  }
+
   useEffect(() => {
-    if(cookies["login"] === undefined) {
+    if (cookies["login"] === undefined) {
       alert("로그인이 필요합니다");
-      navigation('/login')
+      navigation("/login");
       return;
     }
     let id = cookies["login"].id;
 
     groupData(id);
+    eventPost();
   }, []);
 
   return (
@@ -95,7 +134,11 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
           onClick={() => setOpenModal(false)}
         ></button>
         <div className={styles.title_wrap}>
-          <input type="text" placeholder="일정을 입력하세요"></input>
+          <input
+            onChange={titleChange}
+            type="text"
+            placeholder="일정을 입력하세요"
+          ></input>
 
           <Space direction="vertical" size={20}>
             <RangePicker
@@ -137,11 +180,11 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
                 console.log("DATA : ", data);
               }}
               value={select}
-              />
+            />
           </div>
           <div className={styles.memo}>
             <span>메모</span>
-            <textarea />
+            <textarea onChange={memoChange} />
           </div>
           <div className={styles.modal_btn}>
             <button
