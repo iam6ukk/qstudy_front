@@ -6,6 +6,7 @@ import { DatePicker, Space } from "antd";
 import { Select } from "antd";
 import axios from "axios";
 import { async } from "q";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 
 // 일자, 시간 선택
@@ -21,7 +22,9 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
   let outside = useRef();
   let [cookies, setCookie] = useCookies();
   const [group, setGroup] = useState([]);
-  const [select, setSelect] = useState([]);
+  const [selectList, setSelectList] = useState([]);
+  const [select, setSelect] = useState({});
+  const navigation = useNavigate();
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -47,33 +50,42 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
         `http://localhost:8080/group/my?id=${id}`
       );
       console.log("일정관리 분류: ", response.data);
-      setGroup(response.data);
-    } catch (error) {
-      console.error("error: ", error);
-    }
-  }
-  useEffect(() => {
-    let id = cookies["login"].id;
-    groupData(id);
-    console.log(groupId);
-    setSelect(
-      groupId === undefined || groupId === ""
-        ? group.map((item) => {
+      let groupData = response.data;
+      setGroup(groupData);
+
+      let data = groupId === undefined || groupId === ""
+      ? groupData.map((item) => {
+          return {
+            label: item.title,
+            value: item.group_id,
+          };
+        })
+      : groupData
+          .filter((prev) => prev.group_id === groupId)
+          .map((item) => {
             return {
               label: item.title,
               value: item.group_id,
             };
           })
-        : group
-            .filter((prev) => prev.group_id === groupId)
-            .map((item) => {
-              return {
-                label: item.title,
-                value: item.group_id,
-              };
-            })
-    );
-  }, [groupId]);
+      setSelectList(data);
+      setSelect(data.length === 0 ? {} : data[0]);
+
+      console.log("SELECT : ", data[0]);
+    } catch (error) {
+      console.error("error: ", error);
+    }
+  }
+  useEffect(() => {
+    if(cookies["login"] === undefined) {
+      alert("로그인이 필요합니다");
+      navigation('/login')
+      return;
+    }
+    let id = cookies["login"].id;
+
+    groupData(id);
+  }, []);
 
   return (
     <>
@@ -119,8 +131,13 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
                   .toLowerCase()
                   .localeCompare((optionB?.label ?? "").toLowerCase())
               }
-              options={select}
-            />
+              options={selectList}
+              onChange={(item, data) => {
+                setSelect(data);
+                console.log("DATA : ", data);
+              }}
+              value={select}
+              />
           </div>
           <div className={styles.memo}>
             <span>메모</span>
