@@ -7,6 +7,7 @@ import { Select } from "antd";
 import axios from "axios";
 import { async } from "q";
 import { useNavigate } from "react-router-dom";
+import { selector } from "recoil";
 const { RangePicker } = DatePicker;
 
 const ScheduleModal = ({ setOpenModal, groupId }) => {
@@ -108,6 +109,7 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
         .post("http://localhost:8080/calendar/event", event)
         .then((response) => {
           console.log(response);
+          alert("저장되었습니다.");
         });
     } catch (error) {
       console.error("error: ", error);
@@ -123,7 +125,6 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
     let id = cookies["login"].id;
 
     groupData(id);
-    eventPost();
   }, []);
 
   return (
@@ -189,7 +190,10 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
           <div className={styles.modal_btn}>
             <button
               className={styles.ok_btn}
-              onClick={() => setOpenModal(false)}
+              onClick={() => {
+                setOpenModal(false);
+                eventPost();
+              }}
             >
               확인
             </button>
