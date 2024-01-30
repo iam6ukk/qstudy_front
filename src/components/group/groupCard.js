@@ -8,6 +8,7 @@ import { useCookies } from "react-cookie";
 const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies();
+  const [myId, setMyId] = useState("");
   const showModal = () => {
     if (url === "my") {
       navigate("/main/my/group", { state: { groupId: item.group_id } });
@@ -23,6 +24,8 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
       navigate('/login')
       return;
     }
+    setMyId(cookies["login"].id)
+    console.log(cookies["login"].id, item.writer)
   }, [])
 
   const mouseMove = (e) => {};
@@ -35,10 +38,17 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
     >
       <div className={styled.title}>{item.title}</div>
       <div className={styled.contents}>{item.memo}</div>
-      <div className={styled.writer}>작성자 : {item.writer}</div>
-      <div className={styled.crown}>
-        <img src={Crown}></img>
-      </div>
+      <div className={styled.writer}>작성자 : {item.nickname}</div>
+      {
+        item.writer.toString() === myId.toString() ? (
+          <div className={styled.crown}>
+            <img src={Crown}></img>
+          </div>
+        ) : (
+          <></>
+        )
+      
+      }
       <div
         className={styled.color}
         style={{ backgroundColor: item.color }}
