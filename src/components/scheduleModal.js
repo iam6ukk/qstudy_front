@@ -8,9 +8,11 @@ import axios from "axios";
 import { async } from "q";
 import { useNavigate } from "react-router-dom";
 import { selector } from "recoil";
+import moment from "moment";
+import dayjs from "dayjs";
 const { RangePicker } = DatePicker;
 
-const ScheduleModal = ({ setOpenModal, groupId }) => {
+const ScheduleModal = ({date, setOpenModal, groupId }) => {
   let outside = useRef();
   let [cookies, setCookie] = useCookies();
   const [group, setGroup] = useState([]);
@@ -25,7 +27,7 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
 
   // 일자, 시간 선택
   const onChange = (value, dateString) => {
-    console.log("Selected Time: ", value);
+    console.log("Selected Time: ", value, typeof value);
     console.log("Formatted Selected Time: ", dateString);
     setStartDate(dateString[0]);
     setEndDate(dateString[1]);
@@ -143,6 +145,7 @@ const ScheduleModal = ({ setOpenModal, groupId }) => {
 
           <Space direction="vertical" size={20}>
             <RangePicker
+              defaultValue={[date, date]}
               showTime={{
                 format: "HH:mm",
               }}

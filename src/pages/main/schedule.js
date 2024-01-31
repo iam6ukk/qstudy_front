@@ -7,6 +7,8 @@ import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import styles from "./css/schedule.module.css";
 import ScheduleModal from "../../components/scheduleModal";
+import dayjs from "dayjs";
+import moment from "moment";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -140,7 +142,7 @@ const dateToString = (date) => {
 };
 
 const Schedule = () => {
-  const [value, onChange] = useState(new Date());
+  const [value, onChange] = useState(new moment());
   const outside = useRef(null);
   let [cookies, setCookie] = useCookies();
   const navigation = useNavigate();
@@ -177,7 +179,7 @@ const Schedule = () => {
 
   return (
     <div className={styles.schedule_conatiner} ref={outside}>
-      {openModal ? <ScheduleModal setOpenModal={setOpenModal} /> : null}
+      {openModal ? <ScheduleModal date={dayjs(value)} setOpenModal={setOpenModal} /> : null}
       <CalendarBox
         onChange={onChange}
         onClickDay={showModal}
