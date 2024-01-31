@@ -20,14 +20,25 @@ export const CalendarBox = styled(Calendar)`
   //전체 컨테이너
 
   .dot_container {
+    margin-bottom: 5px;
     position: relative;
     display: flex;
     flex-direction: row;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    
+    width: 90%;
   }
   .dot {
+    margin-left: 10px;
+    margin-top: 6px;
     height: 15px;
     width: 15px;
     border-radius: 50%;
+    margin-right: 5px;
   }
 
   // 달력 네비게이션 섹션
@@ -81,6 +92,10 @@ export const CalendarBox = styled(Calendar)`
     font-size: 18px;
     font-weight: 500;
     transition: 0.3s;
+    position: relative;
+
+    abbr {
+    }
   }
 
   // 오늘 일자
