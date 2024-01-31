@@ -21,16 +21,13 @@ export const CalendarBox = styled(Calendar)`
 
   .dot_container {
     position: relative;
+    display: flex;
+    flex-direction: row;
   }
   .dot {
     height: 15px;
     width: 15px;
-    background-color: #f87171;
     border-radius: 50%;
-    display: flex;
-    position: absolute;
-    top: 15px;
-    left: 50px;
   }
 
   // 달력 네비게이션 섹션
@@ -148,7 +145,7 @@ const Schedule = () => {
   const navigation = useNavigate();
 
   let mark = [new Date()];
-  const [eventList, setEventList] = useState();
+  const [eventList, setEventList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const showModal = () => {
     setOpenModal(true);
@@ -179,7 +176,9 @@ const Schedule = () => {
 
   return (
     <div className={styles.schedule_conatiner} ref={outside}>
-      {openModal ? <ScheduleModal date={dayjs(value)} setOpenModal={setOpenModal} /> : null}
+      {openModal ? (
+        <ScheduleModal date={dayjs(value)} setOpenModal={setOpenModal} />
+      ) : null}
       <CalendarBox
         onChange={onChange}
         onClickDay={showModal}
@@ -196,19 +195,28 @@ const Schedule = () => {
           let html = [];
           // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
           // 날짜, 그룹 비교 => 해당 색상으로 스타일 변경??
-          if (mark.find((x) => dateToString(x) === dateToString(date))) {
-            html.push(
-              <div className="dot_container">
-                <div className="dot"></div>
-              </div>
-            );
-          }
+          eventList?.map((item) => {
+            if (
+              new Date(item.start_date).setHours(0, 0, 0, 0) <=
+                new Date(date) &&
+              new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date)
+            ) {
+              html.push(
+                <div className="dot_container">
+                  <div
+                    className="dot"
+                    style={{ backgroundColor: item.color }}
+                  ></div>
+                  <div className="text">{item.title}</div>
+                </div>
+              );
+            }
+          });
+
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
           return (
             <>
-              <div className="flex justify-center items-center absoluteDiv">
-                {html}
-              </div>
+              <div className={styles.schedule_dot_container}>{html}</div>
             </>
           );
         }}
