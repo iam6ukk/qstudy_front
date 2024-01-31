@@ -20,6 +20,7 @@ export const CalendarBox = styled(Calendar)`
   //전체 컨테이너
 
   .dot_container {
+  background-color: white;
     margin-bottom: 5px;
     position: relative;
     display: flex;
@@ -95,6 +96,14 @@ export const CalendarBox = styled(Calendar)`
     position: relative;
 
     abbr {
+      transition: 0.3s;
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: calc(50% - 15px);
+      line-height: 30px;
+      width: 30px;
+      height: 30px;
     }
   }
 
@@ -102,10 +111,11 @@ export const CalendarBox = styled(Calendar)`
   .react-calendar__tile--now {
     background: #fff;
     abbr {
+      display: block;
+      position: absolute;
       background: #a4c3b2;
       color: #fff;
       border-radius: 10px;
-      padding: 10px;
     }
   }
 
@@ -115,10 +125,11 @@ export const CalendarBox = styled(Calendar)`
     background: #fff;
 
     abbr {
+      display: block;
+      position: absolute;
       background: #dee2e6;
       color: #000;
       border-radius: 10px;
-      padding: 10px;
     }
   }
   .react-calendar__tile:enabled:focus {
@@ -126,10 +137,11 @@ export const CalendarBox = styled(Calendar)`
     background-color: #fff;
 
     abbr {
+      display: block;
+      position: absolute;
       background: #a4c3b2;
       color: #fff;
       border-radius: 10px;
-      padding: 10px;
     }
   }
 
@@ -138,10 +150,11 @@ export const CalendarBox = styled(Calendar)`
     background-color: #fff;
 
     abbr {
+      display: block;
+      position: absolute;
       background: #a4c3b2;
       color: #fff;
       border-radius: 10px;
-      padding: 10px;
     }
   }
 `;
