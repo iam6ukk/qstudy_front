@@ -1,5 +1,8 @@
 import { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import { Cookies, useCookies } from "react-cookie";
 import Calendar from "react-calendar";
+import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import styles from "./css/schedule.module.css";
@@ -139,13 +142,38 @@ const dateToString = (date) => {
 const Schedule = () => {
   const [value, onChange] = useState(new Date());
   const outside = useRef(null);
+  let [cookies, setCookie] = useCookies();
+  const navigation = useNavigate();
 
   let mark = [new Date()];
-
+  const [eventList, setEventList] = useState();
   const [openModal, setOpenModal] = useState(false);
   const showModal = () => {
     setOpenModal(true);
   };
+
+  useEffect(() => {
+    if (cookies["login"] === undefined) {
+      alert("로그인이 필요합니다");
+      navigation("/login");
+      return;
+    }
+    let id = cookies["login"].id;
+
+    getEventList(id);
+  }, []);
+
+  async function getEventList(id) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/calendar/my?id=${id}`
+      );
+      // console.log("내 일정: ", response.data);
+      setEventList(response.data);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
 
   return (
     <div className={styles.schedule_conatiner} ref={outside}>
@@ -165,6 +193,7 @@ const Schedule = () => {
           // 추가할 html 태그를 변수 초기화
           let html = [];
           // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+          // 날짜, 그룹 비교 => 해당 색상으로 스타일 변경??
           if (mark.find((x) => dateToString(x) === dateToString(date))) {
             html.push(
               <div className="dot_container">
