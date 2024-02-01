@@ -1,10 +1,15 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import { Cookies, useCookies } from "react-cookie";
 import Calendar from "react-calendar";
+import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
-import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import styles from "./css/groupSchedule.module.css";
+import styles from "./css/schedule.module.css";
+import styles2 from "./css/groupSchedule.module.css";
 import ScheduleModal from "../../components/scheduleModal";
+import dayjs from "dayjs";
+import moment from "moment";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -16,17 +21,26 @@ export const CalendarBox = styled(Calendar)`
   //전체 컨테이너
 
   .dot_container {
+    background-color: white;
+    margin-bottom: 5px;
     position: relative;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+
+    width: 90%;
   }
   .dot {
+    margin-left: 10px;
+    margin-top: 6px;
     height: 15px;
-    width: 15px;
-    background-color: #f87171;
+    min-width: 15px;
     border-radius: 50%;
-    display: flex;
-    position: absolute;
-    top: 15px;
-    left: 50px;
+    margin-right: 5px;
   }
 
   // 달력 네비게이션 섹션
@@ -80,16 +94,29 @@ export const CalendarBox = styled(Calendar)`
     font-size: 18px;
     font-weight: 500;
     transition: 0.3s;
+    position: relative;
+
+    abbr {
+      transition: 0.3s;
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: calc(50% - 15px);
+      line-height: 30px;
+      width: 30px;
+      height: 30px;
+    }
   }
 
   // 오늘 일자
   .react-calendar__tile--now {
     background: #fff;
     abbr {
+      display: block;
+      position: absolute;
       background: #a4c3b2;
       color: #fff;
       border-radius: 10px;
-      padding: 10px;
     }
   }
 
@@ -99,10 +126,11 @@ export const CalendarBox = styled(Calendar)`
     background: #fff;
 
     abbr {
+      display: block;
+      position: absolute;
       background: #dee2e6;
       color: #000;
       border-radius: 10px;
-      padding: 10px;
     }
   }
   .react-calendar__tile:enabled:focus {
@@ -110,10 +138,11 @@ export const CalendarBox = styled(Calendar)`
     background-color: #fff;
 
     abbr {
+      display: block;
+      position: absolute;
       background: #a4c3b2;
       color: #fff;
       border-radius: 10px;
-      padding: 10px;
     }
   }
 
@@ -122,14 +151,14 @@ export const CalendarBox = styled(Calendar)`
     background-color: #fff;
 
     abbr {
+      display: block;
+      position: absolute;
       background: #a4c3b2;
       color: #fff;
       border-radius: 10px;
-      padding: 10px;
     }
   }
 `;
-
 const dateToString = (date) => {
   let year = date.getFullYear();
   let month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -138,38 +167,56 @@ const dateToString = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-const GroupSchedule = ({ route }) => {
-  const [value, onChange] = useState(new Date());
-  const navigate = useNavigate();
+const GroupSchedule = () => {
+  const [value, onChange] = useState(new moment());
+  const outside = useRef(null);
+  let [cookies, setCookie] = useCookies();
+  const navigation = useNavigate();
+
   let mark = [new Date()];
-
-  const [groupId, setGroupId] = useState("");
-
+  const [eventList, setEventList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const showModal = () => {
     setOpenModal(true);
   };
 
-  // 1. useLocation 훅 취득
-  const location = useLocation();
-
   useEffect(() => {
-    if (location.state.groupId === undefined) {
+    if (cookies["login"] === undefined) {
+      alert("로그인이 필요합니다");
+      navigation("/login");
       return;
     }
-    const id = location.state.groupId;
+    let id = cookies["login"].id;
 
-    console.log("groupId: ", id);
-    setGroupId(id);
+    getEventList(id);
   }, []);
 
+  async function getEventList(id) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/calendar/my?id=${id}`
+      );
+      // console.log("내 일정: ", response.data);
+      setEventList(response.data);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
   return (
-    <div className={styles.schedule_container}>
-      <button className={styles.prev_btn} onClick={() => navigate("/main/my")}>
+    <div className={styles.schedule_conatiner} ref={outside}>
+      <button
+        className={styles2.prev_btn}
+        onClick={() => navigation("/main/my")}
+      >
         {"<"} 이전
       </button>
       {openModal ? (
-        <ScheduleModal setOpenModal={setOpenModal} groupId={groupId} />
+        <ScheduleModal
+          getEventList={getEventList}
+          date={dayjs(value)}
+          setOpenModal={setOpenModal}
+        />
       ) : null}
       <CalendarBox
         onChange={onChange}
@@ -186,19 +233,29 @@ const GroupSchedule = ({ route }) => {
           // 추가할 html 태그를 변수 초기화
           let html = [];
           // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-          if (mark.find((x) => dateToString(x) === dateToString(date))) {
-            html.push(
-              <div className="dot_container">
-                <div className="dot"></div>
-              </div>
-            );
-          }
+          // 날짜, 그룹 비교 => 해당 색상으로 스타일 변경??
+          eventList?.map((item) => {
+            if (
+              new Date(item.start_date).setHours(0, 0, 0, 0) <=
+                new Date(date) &&
+              new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date)
+            ) {
+              html.push(
+                <div className="dot_container">
+                  <div
+                    className="dot"
+                    style={{ backgroundColor: item.color }}
+                  ></div>
+                  <div className="text">{item.title}</div>
+                </div>
+              );
+            }
+          });
+
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
           return (
             <>
-              <div className="flex justify-center items-center absoluteDiv">
-                {html}
-              </div>
+              <div className={styles.schedule_dot_container}>{html}</div>
             </>
           );
         }}
