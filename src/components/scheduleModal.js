@@ -21,8 +21,8 @@ const ScheduleModal = ({date, setOpenModal, groupId }) => {
   const navigation = useNavigate();
 
   const [title, setTitle] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
+  const [endDate, setEndDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
   const [memo, setMemo] = useState("");
 
   // 일자, 시간 선택

@@ -37,7 +37,7 @@ export const CalendarBox = styled(Calendar)`
     margin-left: 10px;
     margin-top: 6px;
     height: 15px;
-    width: 15px;
+    min-width: 15px;
     border-radius: 50%;
     margin-right: 5px;
   }
