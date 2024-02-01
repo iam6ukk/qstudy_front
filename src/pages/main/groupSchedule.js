@@ -218,6 +218,7 @@ const GroupSchedule = () => {
           getEventList={getEventList}
           date={dayjs(value)}
           setOpenModal={setOpenModal}
+          groupId={groupId}
         />
       ) : null}
       <CalendarBox

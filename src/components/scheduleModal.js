@@ -58,6 +58,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
         setOpenModal(false);
       }
     };
+
     window.addEventListener("mousedown", handleClick);
     return () => window.removeEventListener("mousedown", handleClick);
   }, [outside]);
