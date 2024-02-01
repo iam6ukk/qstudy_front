@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { Cookies, useCookies } from "react-cookie";
 import Calendar from "react-calendar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import styles from "./css/schedule.module.css";
@@ -172,6 +172,8 @@ const GroupSchedule = () => {
   const outside = useRef(null);
   let [cookies, setCookie] = useCookies();
   const navigation = useNavigate();
+  const state = useLocation().state;
+  const groupId = state.groupId;
 
   let mark = [new Date()];
   const [eventList, setEventList] = useState([]);
@@ -196,7 +198,7 @@ const GroupSchedule = () => {
       const response = await axios.get(
         `http://localhost:8080/calendar/my?id=${id}`
       );
-      // console.log("내 일정: ", response.data);
+      console.log("내 일정: ", response.data);
       setEventList(response.data);
     } catch (error) {
       console.log("error: ", error);
@@ -238,7 +240,7 @@ const GroupSchedule = () => {
             if (
               new Date(item.start_date).setHours(0, 0, 0, 0) <=
                 new Date(date) &&
-              new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date)
+              new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date) && groupId === item.group_id
             ) {
               html.push(
                 <div className="dot_container">
