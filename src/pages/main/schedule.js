@@ -205,7 +205,7 @@ const Schedule = () => {
   return (
     <div className={styles.schedule_conatiner} ref={outside}>
       {openModal ? (
-        <ScheduleModal date={dayjs(value)} setOpenModal={setOpenModal} />
+        <ScheduleModal getEventList={getEventList} date={dayjs(value)} setOpenModal={setOpenModal} />
       ) : null}
       <CalendarBox
         onChange={onChange}

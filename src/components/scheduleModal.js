@@ -12,7 +12,7 @@ import moment from "moment";
 import dayjs from "dayjs";
 const { RangePicker } = DatePicker;
 
-const ScheduleModal = ({date, setOpenModal, groupId }) => {
+const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
   let outside = useRef();
   let [cookies, setCookie] = useCookies();
   const [group, setGroup] = useState([]);
@@ -99,8 +99,9 @@ const ScheduleModal = ({date, setOpenModal, groupId }) => {
 
   async function eventPost() {
     try {
+      let id = cookies["login"].id.toString();
       const event = {
-        user_id: cookies["login"].id.toString(),
+        user_id: id,
         group_id: select.value,
         title: title,
         start_date: startDate,
@@ -112,6 +113,7 @@ const ScheduleModal = ({date, setOpenModal, groupId }) => {
         .then((response) => {
           console.log(response);
           alert("저장되었습니다.");
+          getEventList(id);
         });
     } catch (error) {
       console.error("error: ", error);
