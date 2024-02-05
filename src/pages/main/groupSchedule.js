@@ -17,7 +17,7 @@ export const CalendarBox = styled(Calendar)`
   width: auto;
   margin-top: 30px;
   transition: 0.3s;
-  height: 90%;
+  height: 85%;
   //전체 컨테이너
 
   .dot_container {
@@ -241,7 +241,8 @@ const GroupSchedule = () => {
             if (
               new Date(item.start_date).setHours(0, 0, 0, 0) <=
                 new Date(date) &&
-              new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date) && groupId === item.group_id
+              new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date) &&
+              groupId === item.group_id
             ) {
               html.push(
                 <div className="dot_container">
