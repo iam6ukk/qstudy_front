@@ -18,6 +18,7 @@
 }
 
 .routes {
+  position: relative;
   width: calc(100% - 300px);
   height: 90%;
   max-height: 1200px;

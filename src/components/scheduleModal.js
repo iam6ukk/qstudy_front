@@ -24,6 +24,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
   const [startDate, setStartDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
   const [endDate, setEndDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
   const [memo, setMemo] = useState("");
+  const [eventList, setEventList] = useState([]);
 
   // 일자, 시간 선택
   const onChange = (value, dateString) => {
@@ -58,18 +59,28 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
         setOpenModal(false);
       }
     };
-
+    
     window.addEventListener("mousedown", handleClick);
     return () => window.removeEventListener("mousedown", handleClick);
   }, [outside]);
 
+  async function getLocalEventList(id) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/calendar/my?id=${id}`
+      );
+      console.log("내 일정: ", response.data);
+      setEventList(response.data);
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
   // 내 그룹 데이터
   async function groupData(id) {
     try {
       const response = await axios.get(
         `http://localhost:8080/group/my?id=${id}`
       );
-      console.log("일정관리 분류: ", response.data);
       let groupData = response.data;
       setGroup(groupData);
 
@@ -130,81 +141,98 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
     let id = cookies["login"].id;
 
     groupData(id);
+    getLocalEventList(id);
   }, []);
 
   return (
     <>
       <div className={styles.scheduler_container}>
-        <button
-          className={styles.close_btn}
-          onClick={() => setOpenModal(false)}
-        ></button>
-        <div className={styles.title_wrap}>
-          <input
-            onChange={titleChange}
-            type="text"
-            placeholder="일정을 입력하세요"
-          ></input>
+        <div className={styles.scheduler_wrap}>
+          <div className={styles.scheduler_list}>
+            <div className={styles.list_container}>
+              <b>참여 리스트</b>
+              <div className={styles.list}>
+                <div className={styles.block}></div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <div>
+              <button
+                className={styles.close_btn}
+                onClick={() => setOpenModal(false)}
+              ></button>
+            </div>
+            <div className={styles.title_wrap}>
+              <input
+                onChange={titleChange}
+                type="text"
+                placeholder="일정을 입력하세요"
+              ></input>
 
-          <Space direction="vertical" size={20}>
-            <RangePicker
-              defaultValue={[date, date]}
-              showTime={{
-                format: "HH:mm",
-              }}
-              format="YYYY-MM-DD HH:mm"
-              onChange={onChange}
-              onOk={onOk}
-              style={{
-                width: 558,
-                fontSize: "20px",
-              }}
-            />
-          </Space>
+              <Space direction="vertical" size={20}>
+                <RangePicker
+                  defaultValue={[date, date]}
+                  showTime={{
+                    format: "HH:mm",
+                  }}
+                  format="YYYY-MM-DD HH:mm"
+                  onChange={onChange}
+                  onOk={onOk}
+                  style={{
+                    width: 558,
+                    fontSize: "20px",
+                  }}
+                />
+              </Space>
+            </div>
+            <div className={styles.etc_wrap}>
+              <div className={styles.group_select}>
+                <span>분류</span>
+                <Select
+                  showSearch
+                  style={{
+                    width: 280,
+                    height: 40,
+                  }}
+                  placeholder="그룹 선택"
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? "").includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? "")
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? "").toLowerCase())
+                  }
+                  options={selectList}
+                  onChange={(item, data) => {
+                    setSelect(data);
+                    console.log("DATA : ", data);
+                  }}
+                  value={select}
+                />
+              </div>
+              <div className={styles.memo}>
+                <span>메모</span>
+                <textarea onChange={memoChange} />
+              </div>
+              <div className={styles.modal_btn}>
+                <button
+                  className={styles.ok_btn}
+                  onClick={() => {
+                    setOpenModal(false);
+                    eventPost();
+                  }}
+                >
+                  확인
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={styles.etc_wrap}>
-          <div className={styles.group_select}>
-            <span>분류</span>
-            <Select
-              showSearch
-              style={{
-                width: 280,
-                height: 40,
-              }}
-              placeholder="그룹 선택"
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? "").includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? "")
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? "").toLowerCase())
-              }
-              options={selectList}
-              onChange={(item, data) => {
-                setSelect(data);
-                console.log("DATA : ", data);
-              }}
-              value={select}
-            />
-          </div>
-          <div className={styles.memo}>
-            <span>메모</span>
-            <textarea onChange={memoChange} />
-          </div>
-          <div className={styles.modal_btn}>
-            <button
-              className={styles.ok_btn}
-              onClick={() => {
-                setOpenModal(false);
-                eventPost();
-              }}
-            >
-              확인
-            </button>
-          </div>
-        </div>
+
       </div>
       <div className={styles.scheduler_block} ref={outside}></div>
     </>

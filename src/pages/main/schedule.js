@@ -20,7 +20,7 @@ export const CalendarBox = styled(Calendar)`
   //전체 컨테이너
 
   .dot_container {
-  background-color: white;
+    background-color: white;
     margin-bottom: 5px;
     position: relative;
     display: flex;
@@ -40,6 +40,21 @@ export const CalendarBox = styled(Calendar)`
     min-width: 15px;
     border-radius: 50%;
     margin-right: 5px;
+  }
+  
+  .plus_container {
+    position: absolute;
+    top: -30px;
+    left: 2px;
+
+  }
+
+  .plus {
+    background-color: #A0D468;
+    width: 20px;
+    height: 20px;
+    color: white;
+    border-radius: 5px;
   }
 
   // 달력 네비게이션 섹션
@@ -229,15 +244,26 @@ const Schedule = () => {
                 new Date(date) &&
               new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date)
             ) {
-              html.push(
-                <div className="dot_container">
-                  <div
-                    className="dot"
-                    style={{ backgroundColor: item.color }}
-                  ></div>
-                  <div className="text">{item.title}</div>
-                </div>
-              );
+              if(html.length == 2) {
+                html.push(
+                  <div className="plus_container">
+                    <div className="plus">
+                      +
+                    </div>
+                  </div>
+                )
+              } else if(html.length < 2){
+                html.push(
+                  <div className="dot_container">
+                    <div
+                      className="dot"
+                      style={{ backgroundColor: item.color }}
+                    ></div>
+                    <div className="text">{item.title}</div>
+                  </div>
+                );
+              }
+             
             }
           });
 

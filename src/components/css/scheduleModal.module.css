@@ -1,13 +1,13 @@
 .scheduler_container {
   background: #fff;
-  width: 600px;
+  width: 800px;
   height: 440px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   position: absolute;
-  margin-top: 250px;
-  left: 160px;
-  z-index: 100;
+  margin-top: 25%;
+  left: 70px;
+  z-index: 200;
 }
 
 .scheduler_block {
@@ -15,6 +15,7 @@
   width: 95%;
   height: 90%;
   background-color: rgba(0, 0, 0, 0);
+  z-index: 100;
 }
 
 .close_btn {
@@ -89,4 +90,21 @@
   border-radius: 5px;
   background: #b5e6e0;
   cursor: pointer;
+}
+
+.scheduler_wrap {
+  display: flex;
+  flex-direction: row;
+}
+
+.scheduler_list {
+  margin-top: 25px;
+  width: 300px;
+  border-right: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list_container {
 }

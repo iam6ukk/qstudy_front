@@ -43,6 +43,22 @@ export const CalendarBox = styled(Calendar)`
     margin-right: 5px;
   }
 
+  
+  .plus_container {
+    position: absolute;
+    top: -30px;
+    left: 2px;
+
+  }
+
+  .plus {
+    background-color: #A0D468;
+    width: 20px;
+    height: 20px;
+    color: white;
+    border-radius: 5px;
+  }
+
   // 달력 네비게이션 섹션
   .react-calendar__navigation {
     height: 80px;
@@ -244,15 +260,25 @@ const GroupSchedule = () => {
               new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date) &&
               groupId === item.group_id
             ) {
-              html.push(
-                <div className="dot_container">
-                  <div
-                    className="dot"
-                    style={{ backgroundColor: item.color }}
-                  ></div>
-                  <div className="text">{item.title}</div>
-                </div>
-              );
+              if(html.length == 2) {
+                html.push(
+                  <div className="plus_container">
+                    <div className="plus">
+                      +
+                    </div>
+                  </div>
+                )
+              } else if(html.length < 2){
+                html.push(
+                  <div className="dot_container">
+                    <div
+                      className="dot"
+                      style={{ backgroundColor: item.color }}
+                    ></div>
+                    <div className="text">{item.title}</div>
+                  </div>
+                );
+              }
             }
           });
 

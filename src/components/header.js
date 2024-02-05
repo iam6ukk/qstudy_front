@@ -5,6 +5,7 @@ import Calendar from "react-calendar";
 import { useState } from "react";
 import Meeting from "../assets/meeting.png";
 import Sociology from "../assets/sociology.png";
+import { useCookies } from "react-cookie";
 
 
 export const CalendarBox = styled.div`
@@ -60,7 +61,16 @@ export const StyleCalendar = styled(Calendar)`
 const Header = () => {
     const [today, setToday] = useState(new Date());
     const [click, setClick] = useState("all");
+    const [cookies, setCookie, removeCookie] = useCookies();
 
+    const logout = (e) => {
+      if(window.confirm("로그아웃 하시겠습니까?")) {
+        alert("로그아웃 되었습니다.");
+        removeCookie("login")
+      } else {
+        e.preventDefault();
+      }
+    }
     
     return (
         <div className={styles.header_container}>
@@ -74,7 +84,7 @@ const Header = () => {
 
             <div style={{marginTop: "20px"}}></div>
 
-            <Link to={"/main/my"} onClick={() => {setClick("my")}}>
+            <Link to={"/main/my"} onClick={() => {setClick("my");}}>
                 <div className={click === "my" ? styles.header_btn_active : styles.header_btn}>
                     <span>내 그룹</span>
                 </div>
@@ -87,12 +97,13 @@ const Header = () => {
                     <span>내 일정관리</span>
                 </div>
             </Link>
+            <div style={{marginTop: "20px"}}></div>
 
-            
-            <div className={styles.board_todo}>
-                <label>Todo List</label>
-                <textarea name="todo"></textarea>
-            </div>
+            <Link to={"/login"} onClick={logout}>
+                <div className={click === "logout" ? styles.header_btn_active : styles.header_btn}>
+                    <span>로그아웃</span>
+                </div>
+            </Link>
 
 
             <CalendarBox>
