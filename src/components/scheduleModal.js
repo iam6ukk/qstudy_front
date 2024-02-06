@@ -110,6 +110,10 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
   }
 
   async function eventPost() {
+    if(!window.confirm("일정을 등록하시겠습니까?")) {
+      return;
+    }
+
     try {
       let id = cookies["login"].id.toString();
       const event = {
@@ -125,6 +129,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
         .then((response) => {
           console.log(response);
           alert("저장되었습니다.");
+          setOpenModal(false);
           getEventList(id);
         });
     } catch (error) {
@@ -142,6 +147,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
 
     groupData(id);
     getLocalEventList(id);
+    console.log("그룹 : ", groupId, date);
   }, []);
 
   return (
@@ -152,13 +158,36 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
             <div className={styles.list_container}>
               <b>참여 리스트</b>
               <div className={styles.list}>
-                <div className={styles.block}></div>
+                {
+                  groupId === undefined ? (
+                    eventList.filter((prev) => 
+                      dayjs(prev.start_date) <= date && dayjs(prev.end_date) >= date).map((item) => (
+                      <div className={styles.block}>
+                        <div className={styles.block_color} style={{background: item.color}}></div>
+                        <div className={styles.block_title}>
+                          {item.title}
+                        </div>
+                      </div>
+                  ))
+                  ) : (
+                  eventList.filter((prev) => prev.group_id === groupId &&
+                    dayjs(prev.start_date) <= date && dayjs(prev.end_date) >= date).map((item) => (
+                    <div className={styles.block}>
+                      <div className={styles.block_color} style={{background: item.color}}></div>
+                      <div className={styles.block_title}>
+                        {item.title}
+                      </div>
+                    </div>
+                  ))
+                  )
+                }
               </div>
             </div>
           </div>
           
           <div>
-            <div>
+            <div className={styles.modal_close_title}>
+              <div className={styles.modal_title}>{date.format("YYYY-MM-DD")}</div>
               <button
                 className={styles.close_btn}
                 onClick={() => setOpenModal(false)}
@@ -181,7 +210,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
                   onChange={onChange}
                   onOk={onOk}
                   style={{
-                    width: 558,
+                    width: 520,
                     fontSize: "20px",
                   }}
                 />
@@ -222,7 +251,6 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
                 <button
                   className={styles.ok_btn}
                   onClick={() => {
-                    setOpenModal(false);
                     eventPost();
                   }}
                 >

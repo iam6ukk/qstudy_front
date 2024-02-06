@@ -24,14 +24,13 @@
   border-radius: 50px;
   border: none;
   background: #fa818b;
-  float: right;
-  margin-top: 20px;
-  margin-right: 20px;
   cursor: pointer;
+  position: absolute;
+  left: 500px;
 }
 
 .title_wrap {
-  margin-top: 30px;
+  margin-top: 40px;
   margin-left: 20px;
 }
 .title_wrap > input {
@@ -99,12 +98,78 @@
 
 .scheduler_list {
   margin-top: 25px;
-  width: 300px;
-  border-right: 1px solid lightgray;
+  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.block {
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  width: 180px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  box-shadow: 0px 0px 3px lightgray;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+  top: 0px;
+}
+
+.block:hover {
+  background-color: rgb(245, 245, 245);
+
+}
+
+.block_color {
+  margin-left: 5px;
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
+}
+
+.list {
+  margin-top: 15px;
+  height: 360px;
+  padding-right: 5px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;  /* 스크롤바의 너비 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+      height: 30%; /* 스크롤바의 길이 */
+      background: #6e6e6e81; /* 스크롤바의 색상 */
+      
+      border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+      background: cce3de6b;  /*스크롤바 뒷 배경 색상*/
+  }
+}
+
+.modal_title {
+  font-weight: bold;
+  font-size: 20px;
+
+}
+.modal_close_title {
+  top: 17px;
+  margin-left: 20px;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+}
+
+
 
 .list_container {
 }
