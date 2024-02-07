@@ -12,7 +12,7 @@ import moment from "moment";
 import dayjs from "dayjs";
 const { RangePicker } = DatePicker;
 
-const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
+const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
   let outside = useRef();
   let [cookies, setCookie] = useCookies();
   const [group, setGroup] = useState([]);
@@ -21,7 +21,9 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
   const navigation = useNavigate();
 
   const [title, setTitle] = useState();
-  const [startDate, setStartDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
+  const [startDate, setStartDate] = useState(
+    date.format("YYYY-MM-DD HH:mm:ss")
+  );
   const [endDate, setEndDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
   const [memo, setMemo] = useState("");
   const [eventList, setEventList] = useState([]);
@@ -59,7 +61,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
         setOpenModal(false);
       }
     };
-    
+
     window.addEventListener("mousedown", handleClick);
     return () => window.removeEventListener("mousedown", handleClick);
   }, [outside]);
@@ -110,7 +112,7 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
   }
 
   async function eventPost() {
-    if(!window.confirm("일정을 등록하시겠습니까?")) {
+    if (!window.confirm("일정을 등록하시겠습니까?")) {
       return;
     }
 
@@ -158,36 +160,47 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
             <div className={styles.list_container}>
               <b>참여 리스트</b>
               <div className={styles.list}>
-                {
-                  groupId === undefined ? (
-                    eventList.filter((prev) => 
-                      dayjs(prev.start_date) <= date && dayjs(prev.end_date) >= date).map((item) => (
-                      <div className={styles.block}>
-                        <div className={styles.block_color} style={{background: item.color}}></div>
-                        <div className={styles.block_title}>
-                          {item.title}
+                {groupId === undefined
+                  ? eventList
+                      .filter(
+                        (prev) =>
+                          dayjs(prev.start_date) <= date &&
+                          dayjs(prev.end_date) >= date
+                      )
+                      .map((item) => (
+                        <div className={styles.block}>
+                          <div
+                            className={styles.block_color}
+                            style={{ background: item.color }}
+                          ></div>
+                          <div className={styles.block_title}>{item.title}</div>
                         </div>
-                      </div>
-                  ))
-                  ) : (
-                  eventList.filter((prev) => prev.group_id === groupId &&
-                    dayjs(prev.start_date) <= date && dayjs(prev.end_date) >= date).map((item) => (
-                    <div className={styles.block}>
-                      <div className={styles.block_color} style={{background: item.color}}></div>
-                      <div className={styles.block_title}>
-                        {item.title}
-                      </div>
-                    </div>
-                  ))
-                  )
-                }
+                      ))
+                  : eventList
+                      .filter(
+                        (prev) =>
+                          prev.group_id === groupId &&
+                          dayjs(prev.start_date) <= date &&
+                          dayjs(prev.end_date) >= date
+                      )
+                      .map((item) => (
+                        <div className={styles.block}>
+                          <div
+                            className={styles.block_color}
+                            style={{ background: item.color }}
+                          ></div>
+                          <div className={styles.block_title}>{item.title}</div>
+                        </div>
+                      ))}
               </div>
             </div>
           </div>
-          
+
           <div>
             <div className={styles.modal_close_title}>
-              <div className={styles.modal_title}>{date.format("YYYY-MM-DD")}</div>
+              <div className={styles.modal_title}>
+                {date.format("YYYY-MM-DD")}
+              </div>
               <button
                 className={styles.close_btn}
                 onClick={() => setOpenModal(false)}
@@ -260,7 +273,6 @@ const ScheduleModal = ({getEventList, date, setOpenModal, groupId }) => {
             </div>
           </div>
         </div>
-
       </div>
       <div className={styles.scheduler_block} ref={outside}></div>
     </>

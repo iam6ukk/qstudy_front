@@ -51,6 +51,12 @@ const LoginPage = () => {
     navigate("/main/all");
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      logIn();
+    }
+  };
+
   async function logIn() {
     try {
       const loginData = {
@@ -109,11 +115,15 @@ const LoginPage = () => {
         <div className={styles.basic_wrap}>
           <div className={styles.login_input}>
             <label>ID</label>
-            <input type="id" onChange={idChange} />
+            <input type="id" onChange={idChange} onKeyUp={handleKeyPress} />
           </div>
           <div className={styles.login_input}>
             <label>Password</label>
-            <input type="password" onChange={pwdChange} />
+            <input
+              type="password"
+              onChange={pwdChange}
+              onKeyUp={handleKeyPress}
+            />
           </div>
 
           <div className={styles.sign_wrap}>

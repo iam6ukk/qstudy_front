@@ -10,6 +10,7 @@ import styles2 from "./css/groupSchedule.module.css";
 import ScheduleModal from "../../components/scheduleModal";
 import dayjs from "dayjs";
 import moment from "moment";
+import GroupMember from "../../components/group/groupMember";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -43,16 +44,14 @@ export const CalendarBox = styled(Calendar)`
     margin-right: 5px;
   }
 
-  
   .plus_container {
     position: absolute;
     top: -30px;
     left: 2px;
-
   }
 
   .plus {
-    background-color: #A0D468;
+    background-color: #a0d468;
     width: 20px;
     height: 20px;
     color: white;
@@ -194,8 +193,12 @@ const GroupSchedule = () => {
   let mark = [new Date()];
   const [eventList, setEventList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openMember, setOpenMember] = useState(false);
   const showModal = () => {
     setOpenModal(true);
+  };
+  const showMember = () => {
+    setOpenMember(true);
   };
 
   useEffect(() => {
@@ -223,12 +226,21 @@ const GroupSchedule = () => {
 
   return (
     <div className={styles.schedule_conatiner} ref={outside}>
-      <button
-        className={styles2.prev_btn}
-        onClick={() => navigation("/main/my")}
-      >
-        {"<"} 이전
-      </button>
+      <div className={styles2.schedule_btns}>
+        <button
+          className={styles2.prev_btn}
+          onClick={() => navigation("/main/my")}
+        >
+          {"<"} 이전
+        </button>
+        <button className={styles2.member_btn} onClick={showMember}>
+          참여인원
+        </button>
+        {openMember ? (
+          <GroupMember setOpenMember={setOpenMember} groupId={groupId} />
+        ) : null}
+      </div>
+
       {openModal ? (
         <ScheduleModal
           getEventList={getEventList}
@@ -260,15 +272,13 @@ const GroupSchedule = () => {
               new Date(item.end_date).setHours(0, 0, 0, 0) >= new Date(date) &&
               groupId === item.group_id
             ) {
-              if(html.length == 2) {
+              if (html.length == 2) {
                 html.push(
                   <div className="plus_container">
-                    <div className="plus">
-                      +
-                    </div>
+                    <div className="plus">+</div>
                   </div>
-                )
-              } else if(html.length < 2){
+                );
+              } else if (html.length < 2) {
                 html.push(
                   <div className="dot_container">
                     <div
