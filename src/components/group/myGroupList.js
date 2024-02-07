@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import GroupSchedule from "../../pages/main/groupSchedule";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import GroupAttendModal from "./groupAttendModal";
 //리코일
 
 const GroupList = () => {
@@ -17,6 +18,7 @@ const GroupList = () => {
   const [openModal, setOpenModal] = useState(false);
   const [cookies, setCookie] = useCookies();
   const [inputData, setInputData] = useState("");
+  const [openAttendModal, setOpenAttendModal] = useState(false);
 
   let params = useParams();
   let [url, setUrl] = useState(null);
@@ -91,10 +93,23 @@ const GroupList = () => {
         {url === "all" && openModal ? (
           <GroupAddModal setOpenModal={setOpenModal} data={data} />
         ) : null}
+
+        {
+          openAttendModal ? (
+            <GroupAttendModal setOpenAttendModal={setOpenAttendModal} writer={cookies["login"].id} group={group}/>
+          ) : ( 
+            null
+          )
+        }
+        
         <div className={styled.filter}>
           <div className={styled.groupAllTitle}>
             {url === "all" ? "모두의 스터디" : "나의 스터디"}
           </div>
+          <div className={styled.groupAddBtn} onClick={() => {setOpenAttendModal(true)}}>
+            스터디 생성
+          </div>
+          
           <div className={styled.groupAllSearch}>
             <input placeholder="제목 입력" value={inputData} onChange={(e) => {setInputData(e.target.value)}} onKeyUp={(e) => {
               if(e.key === "Enter") {
