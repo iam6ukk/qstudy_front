@@ -32,19 +32,6 @@
     border-radius: 4px;
   }
   
-  button {
-    background-color: #4caf50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
   
 .profile_Group {
     font-weight: bold;
