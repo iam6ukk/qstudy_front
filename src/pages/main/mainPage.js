@@ -7,6 +7,7 @@ import My from "./my";
 import Schedule from "./schedule";
 import { useCookies } from "react-cookie";
 import GroupSchedule from "./groupSchedule";
+import MyPage from "./mypage";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const MainPage = () => {
             <Route path="/my" element={<My />} />
             <Route path="/my/group" element={<GroupSchedule />} />
             <Route path="/schedule" element={<Schedule />} />
+            <Route path="/mypage" element= {<MyPage/>}/>
           </Routes>
         </div>
       </div>

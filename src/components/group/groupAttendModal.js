@@ -19,7 +19,8 @@ const GroupAttendModal = ({setOpenAttendModal, writer, group}) => {
             group_id: groupId,
             writer: writer.toString(),
             title: title,
-            memo: memo
+            memo: memo,
+            color: "#000000"
         }
 
         try {

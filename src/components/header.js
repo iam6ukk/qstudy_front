@@ -99,6 +99,13 @@ const Header = () => {
             </Link>
             <div style={{marginTop: "20px"}}></div>
 
+            <Link to={"/main/mypage"} onClick={() => {setClick("mypage")}}>
+                <div className={click === "mypage" ? styles.header_btn_active : styles.header_btn}>
+                    <span>마이 페이지</span>
+                </div>
+            </Link>
+            <div style={{marginTop: "20px"}}></div>
+
             <Link to={"/login"} onClick={logout}>
                 <div className={click === "logout" ? styles.header_btn_active : styles.header_btn}>
                     <span>로그아웃</span>
