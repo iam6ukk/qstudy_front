@@ -19,14 +19,14 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   };
 
   useEffect(() => {
-    if(cookies["login"] === undefined) {
+    if (cookies["login"] === undefined) {
       alert("로그인이 필요합니다");
-      navigate('/login')
+      navigate("/login");
       return;
     }
-    setMyId(cookies["login"].id)
-    console.log(cookies["login"].id, item.writer)
-  }, [])
+    setMyId(cookies["login"].id);
+    console.log(cookies["login"].id, item.writer);
+  }, []);
 
   const mouseMove = (e) => {};
   return (
@@ -38,17 +38,15 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
     >
       <div className={styled.title}>{item.title}</div>
       <div className={styled.contents}>{item.memo}</div>
+      <div className={styled.total}>참여 인원 : 명</div>
       <div className={styled.writer}>작성자 : {item.nickname}</div>
-      {
-        item.writer.toString() === myId.toString() ? (
-          <div className={styled.crown}>
-            <img src={Crown}></img>
-          </div>
-        ) : (
-          <></>
-        )
-      
-      }
+      {item.writer.toString() === myId.toString() ? (
+        <div className={styled.crown}>
+          <img src={Crown}></img>
+        </div>
+      ) : (
+        <></>
+      )}
       <div
         className={styled.color}
         style={{ backgroundColor: item.color }}

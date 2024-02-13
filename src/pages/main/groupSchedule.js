@@ -212,6 +212,7 @@ const GroupSchedule = () => {
     getEventList(id);
   }, []);
 
+  // 이벤트 조회
   async function getEventList(id) {
     try {
       const response = await axios.get(
