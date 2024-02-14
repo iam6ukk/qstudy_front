@@ -41,6 +41,7 @@ const LoginPage = () => {
         picture: json.avatar_url,
         nickname: json.login,
         email: json.email,
+        sso: "github"
       },
       {
         path: "/",
@@ -90,6 +91,7 @@ const LoginPage = () => {
               picture: null,
               nickname: res.nickname,
               email: res.email,
+              sso: "normal"
             },
             {
               path: "/",

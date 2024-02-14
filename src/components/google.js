@@ -31,7 +31,8 @@ const GoogleLoginButton = () => {
             id: decodedToken.sub,
             picture: decodedToken.picture,
             nickname: decodedToken.name,
-            email: decodedToken.email
+            email: decodedToken.email,
+            sso: "google"
         }, {
             path: "/",
             expires: expiration

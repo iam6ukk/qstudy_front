@@ -3,6 +3,7 @@ import styles from './css/mypage.module.css';
 import Profile from "../../assets/profile.png";
 import { useCookies } from 'react-cookie';
 import imageCompression from "browser-image-compression";
+import axios from 'axios';
 
 const MyPage = () => {
 
@@ -36,18 +37,18 @@ const MyPage = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if(formData.nickname.trim() === '') {
       alert("닉네임을 입력해주세요.");
       return;
     }
 
-    if(formData.password.trim() === '') {
+    if(cookies["login"]?.sso === "normal" && formData.password.trim() === '') {
       alert("비밀번호를 입력해주세요.");
       return;
     }
 
-    if(formData.email.trim() === '') {
+    if(cookies["login"]?.sso === "normal" && formData.email.trim() === '') {
       alert("이메일을 입력해주세요.");
       return;
     }
@@ -59,7 +60,12 @@ const MyPage = () => {
         picture: changeImage
       }
 
-      
+      try {
+        await axios.post(process.env.REACT_APP_DEV_PATH + "/update", data);
+        alert("저장이 완료되었습니다.");
+      } catch(e) {
+        alert("오류가 발생했습니다.");
+      }
     }
   };
 
@@ -90,28 +96,40 @@ const MyPage = () => {
           />
         </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="password" className={styles.label}>비밀번호 변경</label>
-          <input
-            className={styles.inputForm}
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-          />
-        </div>
+        {
+          cookies["login"]?.sso === "normal" ? (
+            <>
+             <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>비밀번호 변경</label>
+            <input
+              className={styles.inputForm}
+              type="password"
+              id="password"
+              name="password"
+              onChange={handleChange}
+            />
+            
+            </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="email" className={styles.label}>이메일 변경</label>
+                <input
+                  className={styles.inputForm}
+                  value={formData.email}
+                  type="email"
+                  id="email"
+                  name="email"
+                  onChange={handleChange}
+                />
+              </div>
+            </>
+          
+          ) : (
+            <></>
+          )
+        }
+        
 
-        <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>이메일 변경</label>
-          <input
-            className={styles.inputForm}
-            value={formData.email}
-            type="email"
-            id="email"
-            name="email"
-            onChange={handleChange}
-          />
-        </div>
+      
 
         <button className={styles.saveBtn} type="button" onClick={handleSubmit}>
           저장
