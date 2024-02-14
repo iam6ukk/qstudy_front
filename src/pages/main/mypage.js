@@ -42,8 +42,9 @@ const MyPage = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="nickname">닉네임 변경</label>
+          <label htmlFor="nickname" className={styles.label}>닉네임 변경</label>
           <input
+            className={styles.inputForm}
             value={formData.nickname}
             type="text"
             id="nickname"
@@ -53,7 +54,7 @@ const MyPage = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="password">비밀번호 변경</label>
+          <label htmlFor="password" className={styles.label}>비밀번호 변경</label>
           <input
             type="password"
             id="password"
@@ -63,7 +64,7 @@ const MyPage = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="email">이메일 변경</label>
+          <label htmlFor="email" className={styles.label}>이메일 변경</label>
           <input
             value={formData.email}
             type="email"
