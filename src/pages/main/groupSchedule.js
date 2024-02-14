@@ -189,6 +189,7 @@ const GroupSchedule = () => {
   const navigation = useNavigate();
   const state = useLocation().state;
   const groupId = state.groupId;
+  const writer = state.writer;
 
   let mark = [new Date()];
   const [eventList, setEventList] = useState([]);
@@ -210,6 +211,7 @@ const GroupSchedule = () => {
     let id = cookies["login"].id;
 
     getEventList(id);
+    console.log("스터디 방장: ", writer);
   }, []);
 
   // 이벤트 조회
@@ -238,7 +240,11 @@ const GroupSchedule = () => {
           참여인원
         </button>
         {openMember ? (
-          <GroupMember setOpenMember={setOpenMember} groupId={groupId} />
+          <GroupMember
+            setOpenMember={setOpenMember}
+            groupId={groupId}
+            writer={writer}
+          />
         ) : null}
       </div>
 

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./css/groupMember.module.css";
 import axios from "axios";
+import Crown from "../../assets/crown.png";
 
-const GroupMember = ({ setOpenMember, groupId }) => {
+const GroupMember = ({ setOpenMember, groupId, writer }) => {
   const [member, setMember] = useState([]);
 
   // 그룹 멤버 조회
@@ -18,6 +19,24 @@ const GroupMember = ({ setOpenMember, groupId }) => {
     }
   }
 
+  // 방장을 항상 첫 번째로 올리는 함수
+  const prioritizeCaptain = () => {
+    const updatedMembers = member.slice(); // 배열 복사
+    const captainIndex = updatedMembers.findIndex(
+      (user) => writer.toString() === user.id.toString()
+    );
+
+    // 방장인 경우에만 가장 앞에 추가
+    if (captainIndex !== -1) {
+      const captain = updatedMembers.splice(captainIndex, 1)[0]; // splice로 방장 잘라냄
+      updatedMembers.unshift(captain); // 배열의 가장 앞쪽에 추가
+    }
+
+    return updatedMembers;
+  };
+
+  const prioritizedMembers = prioritizeCaptain();
+
   useEffect(() => {
     getMember(groupId);
   }, []);
@@ -32,13 +51,18 @@ const GroupMember = ({ setOpenMember, groupId }) => {
         ></button>
       </div>
       <div className={styles.member_list}>
-        {member.map((user) => {
-          return (
-            <div className={styles.member}>
-              <div>{user.nickname}</div>
-            </div>
-          );
-        })}
+        {prioritizedMembers.map((user) => (
+          <div className={styles.member} key={user.id}>
+            {writer.toString() === user.id.toString() ? (
+              <div className={styles.crown}>
+                <img src={Crown}></img>
+              </div>
+            ) : (
+              <></>
+            )}
+            <div>{user.nickname}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -11,7 +11,9 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
   const [myId, setMyId] = useState("");
   const showModal = () => {
     if (url === "my") {
-      navigate("/main/my/group", { state: { groupId: item.group_id } });
+      navigate("/main/my/group", {
+        state: { groupId: item.group_id, writer: item.writer },
+      });
     } else if (url === "all") {
       setOpenModal(true);
       setData(item);
