@@ -236,16 +236,20 @@ const GroupSchedule = () => {
         >
           {"<"} 이전
         </button>
-        <button className={styles2.member_btn} onClick={showMember}>
-          참여인원
-        </button>
-        {openMember ? (
-          <GroupMember
-            setOpenMember={setOpenMember}
-            groupId={groupId}
-            writer={writer}
-          />
-        ) : null}
+        <div>
+          <button className={styles2.quit_btn}>스터디 나가기</button>
+
+          <button className={styles2.member_btn} onClick={showMember}>
+            참여인원
+          </button>
+          {openMember ? (
+            <GroupMember
+              setOpenMember={setOpenMember}
+              groupId={groupId}
+              writer={writer}
+            />
+          ) : null}
+        </div>
       </div>
 
       {openModal ? (
