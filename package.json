@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.13.2",
     "axios": "^1.6.7",
+    "browser-image-compression": "^2.0.2",
     "dayjs": "^1.11.10",
     "jwt-decode": "^4.0.0",
     "moment": "^2.30.1",
