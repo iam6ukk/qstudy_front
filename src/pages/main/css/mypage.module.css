@@ -63,3 +63,23 @@
 .profile_image:hover {
   background-color: rgba(211, 211, 211, 0.363);
 }
+
+.ssoBtnContainer {
+  
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+}
+
+.githubBtn {
+  width: 50px;
+  height: 50px;
+}
+
+.googleBtn {
+  width: 50px;
+  height: 50px;
+
+}
