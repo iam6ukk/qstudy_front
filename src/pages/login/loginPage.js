@@ -6,9 +6,12 @@ import GithubButton from "../../components/github.js";
 import styles from "./css/login.module.css";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import { userPicture } from "../../recoil/user/user_state.js";
+import { useRecoilState } from "recoil";
 
 const LoginPage = () => {
   const [cookies, setCookie] = useCookies();
+  const [pictureState, setPictureState] = useRecoilState(userPicture);
   const [id, setId] = useState();
   const [pwd, setPwd] = useState();
   const navigate = useNavigate();
@@ -58,6 +61,28 @@ const LoginPage = () => {
     }
   };
 
+  const cookieSetup = (res) => {
+    const time = 3600; //1시간
+    const expiration = new Date(Date.now() + time * 1000);
+    console.log("LOGIN SUCCESS : ", res);
+
+    setCookie(
+      "login",
+      {
+        id: res.id,
+        picture: null,
+        nickname: res.nickname,
+        email: res.email,
+        sso: "normal"
+      },
+      {
+        path: "/",
+        expires: expiration,
+      }
+    );
+    setPictureState(res.picture);
+  }
+
   async function logIn() {
     try {
       const loginData = {
@@ -81,23 +106,10 @@ const LoginPage = () => {
         } else if (res.id === id) {
           // id, pwd가 모두 일치한 경우
           console.log("로그인 성공");
-          const time = 3600; //1시간
-          const expiration = new Date(Date.now() + time * 1000);
+         
+          cookieSetup(res);
           //로그인 쿠키 설정
-          setCookie(
-            "login",
-            {
-              id: res.id,
-              picture: null,
-              nickname: res.nickname,
-              email: res.email,
-              sso: "normal"
-            },
-            {
-              path: "/",
-              expires: expiration,
-            }
-          );
+         
           console.log("Setup Cookie");
           navigate("/main/all");
         }
