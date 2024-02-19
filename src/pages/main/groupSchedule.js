@@ -186,6 +186,7 @@ const GroupSchedule = () => {
   const [value, onChange] = useState(new moment());
   const outside = useRef(null);
   let [cookies, setCookie] = useCookies();
+  const [userId, setUserId] = useState();
   const navigation = useNavigate();
   const state = useLocation().state;
   const groupId = state.groupId;
@@ -202,6 +203,19 @@ const GroupSchedule = () => {
     setOpenMember(true);
   };
 
+  const studyQuit = () => {
+    if (window.confirm("스터디에서 나가시겠습니까?")) {
+      alert("스터디에서 나가셨습니다.");
+      deleteGroupMember();
+    }
+  };
+  const studyRemove = () => {
+    if (window.confirm("스터디를 삭제하시겠습니까?")) {
+      alert("스터디를 삭제하셨습니다.");
+      deleteGroup();
+    }
+  };
+
   useEffect(() => {
     if (cookies["login"] === undefined) {
       alert("로그인이 필요합니다");
@@ -209,6 +223,7 @@ const GroupSchedule = () => {
       return;
     }
     let id = cookies["login"].id;
+    setUserId(id);
 
     getEventList(id);
     console.log("스터디 방장: ", writer);
@@ -227,6 +242,25 @@ const GroupSchedule = () => {
     }
   }
 
+  // 스터디원 삭제
+  async function deleteGroupMember() {
+    axios.delete("http://localhost:8080//group/attend/member/delete", {
+      data: {
+        group_id: groupId,
+        user_id: userId,
+      },
+    });
+  }
+
+  // 스터디 삭제
+  async function deleteGroup() {
+    axios.delete("http://localhost:8080//group/delete", {
+      data: {
+        group_id: groupId,
+      },
+    });
+  }
+
   return (
     <div className={styles.schedule_conatiner} ref={outside}>
       <div className={styles2.schedule_btns}>
@@ -237,8 +271,15 @@ const GroupSchedule = () => {
           {"<"} 이전
         </button>
         <div>
-          <button className={styles2.quit_btn}>스터디 나가기</button>
-
+          {userId === writer ? (
+            <button className={styles2.quit_btn} onClick={() => studyRemove()}>
+              스터디 삭제
+            </button>
+          ) : (
+            <button className={styles2.quit_btn} onClick={() => studyQuit()}>
+              스터디 나가기
+            </button>
+          )}
           <button className={styles2.member_btn} onClick={showMember}>
             참여인원
           </button>
