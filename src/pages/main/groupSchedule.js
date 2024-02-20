@@ -271,7 +271,7 @@ const GroupSchedule = () => {
           {"<"} 이전
         </button>
         <div>
-          {userId === writer ? (
+          {userId == writer ? (
             <button className={styles2.quit_btn} onClick={() => studyRemove()}>
               스터디 삭제
             </button>
