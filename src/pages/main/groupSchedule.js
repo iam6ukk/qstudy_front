@@ -244,7 +244,7 @@ const GroupSchedule = () => {
 
   // 스터디원 삭제
   async function deleteGroupMember() {
-    axios.delete("http://localhost:8080//group/attend/member/delete", {
+    axios.delete("http://localhost:8080/group/attend/member/delete", {
       data: {
         group_id: groupId,
         user_id: userId,
@@ -254,7 +254,7 @@ const GroupSchedule = () => {
 
   // 스터디 삭제
   async function deleteGroup() {
-    axios.delete("http://localhost:8080//group/delete", {
+    axios.delete(process.env.REACT_APP_DEV_PATH + "/group/delete", {
       data: {
         group_id: groupId,
       },
