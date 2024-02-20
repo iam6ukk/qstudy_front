@@ -27,7 +27,7 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
       return;
     }
     setMyId(cookies["login"].id);
-    console.log(cookies["login"].id, item.writer);
+    console.log("ITEM : ", item);
   }, []);
 
   const mouseMove = (e) => {};
@@ -40,7 +40,7 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
     >
       <div className={styled.title}>{item.title}</div>
       <div className={styled.contents}>{item.memo}</div>
-      <div className={styled.total}>참여 인원 : 명</div>
+      <div className={styled.total}>참여 인원 : {item.total}명</div>
       <div className={styled.writer}>작성자 : {item.nickname}</div>
       {item.writer.toString() === myId.toString() ? (
         <div className={styled.crown}>

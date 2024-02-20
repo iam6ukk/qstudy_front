@@ -80,7 +80,7 @@ const LoginPage = () => {
         expires: expiration,
       }
     );
-    setPictureState(res.picture);
+    setPictureState("data:image/png;base64," + res.picture);
   }
 
   async function logIn() {

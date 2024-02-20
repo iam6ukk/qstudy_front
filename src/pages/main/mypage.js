@@ -23,7 +23,7 @@ const MyPage = () => {
   const [changeImage, setChangeImage] = useState('');
 
   useEffect(() => {
-    setChangeImage(cookies["login"]?.sso === "normal" ?  pictureState : cookies["login"]?.picture)
+    setChangeImage(cookies["login"]?.sso === "normal" ?  pictureState : cookies["login"].picture)
   }, [])
   const encodeFileToBase64 = async (fileBlob) => {
     const options = {
