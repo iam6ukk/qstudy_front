@@ -54,3 +54,18 @@
     height: 20px;
   }
 }
+
+
+.list_nickname {
+  width: 100px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.exile {
+  cursor: pointer;
+  right: 10px;
+  width: 50px;
+  background-color: #fa818b;
+  color: white;
+  border-radius: 5px;
+}

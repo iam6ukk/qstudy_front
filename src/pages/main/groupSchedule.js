@@ -285,6 +285,7 @@ const GroupSchedule = () => {
           </button>
           {openMember ? (
             <GroupMember
+              userId={userId}
               setOpenMember={setOpenMember}
               groupId={groupId}
               writer={writer}

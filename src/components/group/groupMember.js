@@ -3,7 +3,7 @@ import styles from "./css/groupMember.module.css";
 import axios from "axios";
 import Crown from "../../assets/crown.png";
 
-const GroupMember = ({ setOpenMember, groupId, writer }) => {
+const GroupMember = ({ userId, setOpenMember, groupId, writer }) => {
   const [member, setMember] = useState([]);
 
   // 그룹 멤버 조회
@@ -37,6 +37,12 @@ const GroupMember = ({ setOpenMember, groupId, writer }) => {
 
   const prioritizedMembers = prioritizeCaptain();
 
+  const exile = (user) => {
+    if(window.confirm(`${user.nickname} 님을 추방하시겠습니까?`)) {
+      console.log("추방 : ", user.id);
+    }
+  }
+
   useEffect(() => {
     getMember(groupId);
   }, []);
@@ -54,13 +60,25 @@ const GroupMember = ({ setOpenMember, groupId, writer }) => {
         {prioritizedMembers.map((user) => (
           <div className={styles.member} key={user.id}>
             {writer.toString() === user.id.toString() ? (
+              <>
               <div className={styles.crown}>
                 <img src={Crown}></img>
               </div>
+              <div>{user.nickname}</div>
+              </>
             ) : (
-              <></>
+              writer === userId ? (
+                <>
+                  <div className={styles.list_nickname}>{user.nickname}</div>
+                  <div className={styles.exile} onClick={() => {exile(user);}}>추방</div>
+                </>
+              ) : (
+                <>
+                   <div>{user.nickname}</div>
+                </>
+              )
             )}
-            <div>{user.nickname}</div>
+
           </div>
         ))}
       </div>
