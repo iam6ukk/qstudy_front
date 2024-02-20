@@ -27,7 +27,6 @@ const GroupCard = ({ item, url, openModal, setOpenModal, setData }) => {
       return;
     }
     setMyId(cookies["login"].id);
-    console.log("ITEM : ", item);
   }, []);
 
   const mouseMove = (e) => {};
