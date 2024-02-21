@@ -350,12 +350,15 @@ const GroupSchedule = () => {
                   </div>
                 );
               } else if (html.length < 2) {
+                console.log(item)
+                let image = item.picture?.length > 400 ? "data:image/png;base64," + item.picture : atob(item.picture);
+                
                 html.push(
                   <div className="dot_container">
                     {
                       item.user_id != userId ? (
                         item.picture ? (
-                          <img src={"data:image/png;base64," + item.picture} style={{marginRight: "5px"}}></img>
+                          <img src={image} style={{marginRight: "5px"}}></img>
                         ) : (
                           <img src={User} style={{marginRight: "5px"}}></img>
                         )
