@@ -45,6 +45,7 @@ const GroupMember = ({
 
   const exile = (user) => {
     if (window.confirm(`${user.nickname} 님을 추방하시겠습니까?`)) {
+      alert("추방되었습니다.");
       console.log("추방 : ", user.id);
       deleteGroupMember(user);
     }
@@ -52,12 +53,17 @@ const GroupMember = ({
 
   // 스터디원 추방
   async function deleteGroupMember(user) {
-    axios.delete("http://localhost:8080/group/attend/member/delete", {
-      data: {
-        group_id: groupId,
-        user_id: user.id,
-      },
-    });
+    try {
+      await axios.delete("http://localhost:8080/group/attend/member/delete", {
+        data: {
+          group_id: groupId,
+          user_id: user.id,
+        },
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {

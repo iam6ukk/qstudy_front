@@ -244,21 +244,31 @@ const GroupSchedule = () => {
 
   // 스터디원 삭제
   async function deleteGroupMember() {
-    axios.delete("http://localhost:8080/group/attend/member/delete", {
-      data: {
-        group_id: groupId,
-        user_id: userId,
-      },
-    });
+    try {
+      await axios.delete("http://localhost:8080/group/attend/member/delete", {
+        data: {
+          group_id: groupId,
+          user_id: userId,
+        },
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // 스터디 삭제
   async function deleteGroup() {
-    axios.delete(process.env.REACT_APP_DEV_PATH + "/group/delete", {
-      data: {
-        group_id: groupId,
-      },
-    });
+    try {
+      await axios.delete(process.env.REACT_APP_DEV_PATH + "/group/delete", {
+        data: {
+          group_id: groupId,
+        },
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
