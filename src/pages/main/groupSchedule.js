@@ -289,6 +289,7 @@ const GroupSchedule = () => {
               setOpenMember={setOpenMember}
               groupId={groupId}
               writer={writer}
+              deleteGroupMember={deleteGroupMember}
             />
           ) : null}
         </div>

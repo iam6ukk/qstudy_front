@@ -3,7 +3,13 @@ import styles from "./css/groupMember.module.css";
 import axios from "axios";
 import Crown from "../../assets/crown.png";
 
-const GroupMember = ({ userId, setOpenMember, groupId, writer }) => {
+const GroupMember = ({
+  userId,
+  setOpenMember,
+  groupId,
+  writer,
+  deleteGroupMember,
+}) => {
   const [member, setMember] = useState([]);
 
   // 그룹 멤버 조회
@@ -40,8 +46,19 @@ const GroupMember = ({ userId, setOpenMember, groupId, writer }) => {
   const exile = (user) => {
     if (window.confirm(`${user.nickname} 님을 추방하시겠습니까?`)) {
       console.log("추방 : ", user.id);
+      deleteGroupMember(user);
     }
   };
+
+  // 스터디원 추방
+  async function deleteGroupMember(user) {
+    axios.delete("http://localhost:8080/group/attend/member/delete", {
+      data: {
+        group_id: groupId,
+        user_id: user.id,
+      },
+    });
+  }
 
   useEffect(() => {
     getMember(groupId);
