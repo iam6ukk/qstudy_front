@@ -11,6 +11,7 @@ import ScheduleModal from "../../components/scheduleModal";
 import dayjs from "dayjs";
 import moment from "moment";
 import GroupMember from "../../components/group/groupMember";
+import User from "../../assets/user.png";
 
 export const CalendarBox = styled(Calendar)`
   border: none;
@@ -235,8 +236,14 @@ const GroupSchedule = () => {
       const response = await axios.get(
         `http://localhost:8080/calendar/my?id=${id}`
       );
+
+      const response_other = await axios.get(
+        `http://localhost:8080/calendar/my/group?user_id=${id}&group_id=${groupId}`
+      );
+      
       console.log("내 일정: ", response.data);
-      setEventList(response.data);
+      console.log("다른 일정: ", response_other.data);
+      setEventList(response.data.concat(response_other.data));
     } catch (error) {
       console.log("error: ", error);
     }
@@ -335,10 +342,21 @@ const GroupSchedule = () => {
               } else if (html.length < 2) {
                 html.push(
                   <div className="dot_container">
-                    <div
-                      className="dot"
-                      style={{ backgroundColor: item.color }}
-                    ></div>
+                    {
+                      item.user_id != userId ? (
+                        item.picture ? (
+                          <img src={"data:image/png;base64," + item.picture} style={{marginRight: "5px"}}></img>
+                        ) : (
+                          <img src={User} style={{marginRight: "5px"}}></img>
+                        )
+                      ) : (
+                        <div
+                          className="dot"
+                          style={{ backgroundColor: item.color }}
+                        ></div>
+                      )
+                    }
+                    
                     <div className="text">{item.title}</div>
                   </div>
                 );
