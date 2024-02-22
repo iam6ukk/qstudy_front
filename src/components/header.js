@@ -59,10 +59,9 @@ export const StyleCalendar = styled(Calendar)`
 
 const Header = () => {
   const [today, setToday] = useState(new Date());
-  const [click, setClick] = useState("all");
-  const [cookies, setCookie, removeCookie] = useCookies();
   const params = useParams();
-  console.log(params["*"]);
+  const [click, setClick] = useState(params["*"]);
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const logout = (e) => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -73,9 +72,6 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    setClick("my");
-  }, []);
 
   return (
     <div className={styles.header_container}>
