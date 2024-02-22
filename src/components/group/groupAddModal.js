@@ -5,7 +5,10 @@ import styles from "./css/groupAddMoal.module.css";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useRecoilState } from "recoil";
-import { groupInfoState, groupMinusState } from "../../recoil/group/group_state";
+import {
+  groupInfoState,
+  groupMinusState,
+} from "../../recoil/group/group_state";
 const genPresets = (presets = presetPalettes) =>
   Object.entries(presets).map(([label, colors]) => ({
     label,
@@ -27,39 +30,35 @@ const GroupAddModal = ({ setOpenModal, data }) => {
 
   const submit = async () => {
     setOpenModal(false);
-    try { 
-      
+    try {
       await fetch(`http://localhost:8080/group/attend`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id: cookies["login"].id.toString(),
-        group_id: data.group_id,
-        color: color
-      })
-    });
-    
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: cookies["login"].id.toString(),
+          group_id: data.group_id,
+          color: color,
+        }),
+      });
 
-    alert(`[${data.title}] 참가되었습니다`);
-    let doc = document.querySelector(`#${data.group_id}`);
-    doc.classList.add("group_hide");
-    console.log(doc);
-    setMinuse(minus + 1);
-
-
-    } catch(error) {
+      alert(`[${data.title}] 참가되었습니다`);
+      let doc = document.querySelector(`#${data.group_id}`);
+      doc.classList.add("group_hide");
+      console.log(doc);
+      setMinuse(minus + 1);
+    } catch (error) {
       alert("오류가 발생했습니다.");
     }
-  }
+  };
 
   const RGBtoHex = (r, g, b) => {
     const toHex = (c) => {
       const hex = c.toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
+      return hex.length === 1 ? "0" + hex : hex;
     };
-    return '#' + toHex(r) + toHex(g) + toHex(b);
+    return "#" + toHex(r) + toHex(g) + toHex(b);
   };
 
   const colorChange = (color_) => {
@@ -70,16 +69,17 @@ const GroupAddModal = ({ setOpenModal, data }) => {
     let b = Math.floor(color_code.b);
 
     setColor(RGBtoHex(r, g, b));
-  }
+  };
 
   const outside = useRef(null);
   useEffect(() => {
     const handleClick = (e) => {
       const rect = outside.current.getBoundingClientRect();
-      const isClickOutside = (
-        e.clientX < rect.left || e.clientX > rect.right ||
-        e.clientY < rect.top || e.clientY > rect.bottom
-      );
+      const isClickOutside =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
 
       if (outside.current && isClickOutside) {
         setOpenModal(false);
@@ -89,36 +89,39 @@ const GroupAddModal = ({ setOpenModal, data }) => {
     return () => window.removeEventListener("mousedown", handleClick);
   }, [outside]);
 
-
-
   return (
     <>
-    <div className={styles.add_container}>
-      <button
-        className={styles.close_btn}
-        onClick={() => setOpenModal(false)}
-      ></button>
-      <div className={styles.title_wrap}>
-        <p>참여하시겠습니까?</p>
-      </div>
-      <div className={styles.content_wrap}>
-        <div className={styles.content1}>
-          <div className={styles.group_color}>
-            <ColorPicker presets={presets} defaultValue="#1677ff" onChange={(color) => {colorChange(color)}}/>
+      <div className={styles.add_container}>
+        <button
+          className={styles.close_btn}
+          onClick={() => setOpenModal(false)}
+        ></button>
+        <div className={styles.title_wrap}>
+          <p>참여하시겠습니까?</p>
+        </div>
+        <div className={styles.content_wrap}>
+          <div className={styles.content1}>
+            <div className={styles.group_color}>
+              <ColorPicker
+                presets={presets}
+                defaultValue="#1677ff"
+                onChange={(color) => {
+                  colorChange(color);
+                }}
+              />
+            </div>
+            <p className={styles.group_title}>{data.title}</p>
           </div>
-          <p className={styles.group_title}>{data.title}</p>
+          <div className={styles.content2}>
+            <textarea readOnly={true}>{data.memo}</textarea>
+          </div>
         </div>
-        <div className={styles.content2}>
-          <textarea>{data.memo}</textarea>
+        <div className={styles.ok_btn}>
+          <button onClick={() => submit()}>확인</button>
         </div>
       </div>
-      <div className={styles.ok_btn}>
-        <button onClick={() => submit()}>확인</button>
-      </div>
-    </div>
-    <div className={styles.group_block} ref={outside}></div>
+      <div className={styles.group_block} ref={outside}></div>
     </>
-    
   );
 };
 

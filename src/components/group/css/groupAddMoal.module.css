@@ -8,18 +8,20 @@
   top: 200px;
   margin-left: 230px;
   z-index: 100;
-
 }
 .close_btn {
   width: 20px;
   height: 20px;
   border-radius: 50px;
   border: none;
-  background: #fa818b;
+  background: #ec8385;
   float: right;
   margin-top: 20px;
   margin-right: 20px;
   cursor: pointer;
+}
+.close_btn:hover {
+  background: #e66063;
 }
 
 .title_wrap {
@@ -48,6 +50,7 @@
   border: 1px solid lightgray;
   border-radius: 5px;
   resize: none;
+  outline: none;
 }
 .ok_btn {
   text-align: right;
@@ -60,8 +63,11 @@
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background: #b5e6e0;
+  background: #b7e4c7;
   cursor: pointer;
+}
+.ok_btn > button:hover {
+  background: #95d5b2;
 }
 
 .group_block {

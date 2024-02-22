@@ -194,3 +194,6 @@
   background-color: lightgray;
   cursor: pointer;
 }
+.groupAddBtn:hover {
+  background-color: rgb(197, 197, 197);
+}

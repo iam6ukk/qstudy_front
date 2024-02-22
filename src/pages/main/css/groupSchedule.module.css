@@ -1,16 +1,10 @@
-/* .schedule_container {
-  padding: 20px;
-  height: 96%;
-  position: relative;
-} */
-
 .schedule_btns {
   display: flex;
   justify-content: space-between;
   padding: 0px 3px;
 }
 .prev_btn {
-  height: 30px;
+  height: 32px;
   font-size: 18px;
   cursor: pointer;
   border: none;
@@ -21,15 +15,27 @@
 }
 
 .quit_btn {
-  height: 30px;
-  font-size: 16px;
+  width: 120px;
+  height: 32px;
+  font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 20px;
+  border: none;
+  background-color: #fff;
+}
+.quit_btn:hover {
+  box-shadow: 0px 0px 0px 3px #ec8385;
 }
 .member_btn {
-  height: 30px;
-  font-size: 16px;
+  width: 120px;
+  height: 32px;
+  font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
+  border: none;
+  background-color: #fff;
+}
+.member_btn:hover {
+  box-shadow: 0px 0px 0px 3px #7fbb9a;
 }

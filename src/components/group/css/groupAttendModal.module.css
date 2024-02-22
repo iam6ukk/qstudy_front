@@ -1,99 +1,105 @@
 .modal_background {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal_container {
-    border-radius: 5px;
-    margin-bottom: 200px;
-    background-color: white;
-    width: 500px;
-    height: 350px;
-    border: 1px solid lightgray;
-    
+  border-radius: 5px;
+  margin-bottom: 200px;
+  background-color: white;
+  width: 500px;
+  height: 350px;
+  border: 1px solid lightgray;
+
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .title {
-    display: flex;
-    flex-direction: row;
-    position: relative;
+  display: flex;
+  flex-direction: row;
+  position: relative;
 }
 
 .title_text {
-    height: 50px;
-    line-height: 50px;
-    margin-left: 15px;
-    font-weight: bold;
-    font-size: 18px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .close_btn {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50px;
-    border: none;
-    background: #fa818b;
-    cursor: pointer;
-  }
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  border: none;
+  background: #ec8385;
+  cursor: pointer;
+}
+.close_btn:hover {
+  background: #e66063;
+}
 
-  .inputBox {
-    display: flex;
-    flex-direction: row;
+.inputBox {
+  display: flex;
+  flex-direction: row;
 
-    input {
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        padding: 10px;
-        margin-top: 5px;
-        width: 100%;
-        height: 30px;
-        box-sizing: border-box;
-    }
-
-    textarea {
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        padding: 10px;
-        margin-top: 5px;
-        width: 100%;
-        resize: none;
-        box-sizing: border-box;
-        height: 150px;
-    }
-  }
-
-  .input_container {
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    margin-top: 10px;
-    position: relative;
-  }
-
-  .study_title {
-    width: 120px;
-    height: 40px;
-    line-height: 40px;
-  }
-
-  .createBtn {
-    cursor: pointer;
-    border-radius: 5px ;
+  input {
     border: 1px solid lightgray;
-    font-size: 16px;
-    width: 100px;
-    height: 35px;
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    margin-left: -50px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
   }
+
+  textarea {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
+    height: 150px;
+  }
+}
+
+.input_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.study_title {
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.createBtn {
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  font-size: 16px;
+  width: 100px;
+  height: 35px;
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  margin-left: -50px;
+}
+.createBtn:hover {
+  background-color: rgb(230, 230, 230);
+}
