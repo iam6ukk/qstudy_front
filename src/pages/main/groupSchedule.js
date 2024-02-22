@@ -314,6 +314,7 @@ const GroupSchedule = () => {
 
       {openModal ? (
         <ScheduleModal
+          writer={writer}
           getEventList={getEventList}
           date={dayjs(value)}
           setOpenModal={setOpenModal}
@@ -350,7 +351,6 @@ const GroupSchedule = () => {
                   </div>
                 );
               } else if (html.length < 2) {
-                console.log(item)
                 let image = item.picture?.length > 400 ? "data:image/png;base64," + item.picture : atob(item.picture);
                 
                 html.push(

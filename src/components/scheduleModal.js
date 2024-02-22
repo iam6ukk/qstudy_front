@@ -12,7 +12,7 @@ import moment from "moment";
 import dayjs from "dayjs";
 const { RangePicker } = DatePicker;
 
-const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
+const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => {
   let outside = useRef();
   let [cookies, setCookie] = useCookies();
   const [group, setGroup] = useState([]);
@@ -27,6 +27,8 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
   const [endDate, setEndDate] = useState(date.format("YYYY-MM-DD HH:mm:ss"));
   const [memo, setMemo] = useState("");
   const [eventList, setEventList] = useState([]);
+  const [groupEventList, setGroupEventList] = useState([]);
+  const [userId, setUserId] = useState("");
 
   // 일자, 시간 선택
   const onChange = (value, dateString) => {
@@ -47,6 +49,7 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
     setMemo(e.target.value);
     console.log("event memo: ", memo);
   };
+
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -71,8 +74,14 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
       const response = await axios.get(
         `http://localhost:8080/calendar/my?id=${id}`
       );
+
+      const response_group = await axios.get(
+        `http://localhost:8080/calendar/my/group?group_id=${groupId}&user_id=${id}`
+      );
       console.log("내 일정: ", response.data);
+      console.log("다른 일정 : ", response_group.data);
       setEventList(response.data);
+      setGroupEventList(response_group.data);
     } catch (error) {
       console.log("error: ", error);
     }
@@ -139,6 +148,19 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
     }
   }
 
+  const deleteBtn = async(item) => {
+    if(window.confirm("삭제하시겠습니까?")) {
+      try {
+        await axios.delete(process.env.REACT_APP_DEV_PATH + `/calendar/group?id=${item.id}`);
+        alert("삭제되었습니다.");
+        getLocalEventList(userId);
+        getEventList();
+      } catch(error) {
+        alert("오류가 발생했습니다.");
+      }
+    }
+  }
+
   useEffect(() => {
     if (cookies["login"] === undefined) {
       alert("로그인이 필요합니다");
@@ -146,9 +168,11 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
       return;
     }
     let id = cookies["login"].id;
+    setUserId(id);
 
     groupData(id);
     getLocalEventList(id);
+    
     console.log("그룹 : ", groupId, date);
   }, []);
 
@@ -158,7 +182,7 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
         <div className={styles.scheduler_wrap}>
           <div className={styles.scheduler_list}>
             <div className={styles.list_container}>
-              <b>참여 리스트</b>
+              <b>내 일정</b>
               <div className={styles.list}>
                 {groupId === undefined
                   ? eventList
@@ -174,6 +198,7 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
                             style={{ background: item.color }}
                           ></div>
                           <div className={styles.block_title}>{item.title}</div>
+                          <div className={styles.closeBtn} onClick={() => {deleteBtn(item)}}>삭제</div>
                         </div>
                       ))
                   : eventList
@@ -190,11 +215,60 @@ const ScheduleModal = ({ getEventList, date, setOpenModal, groupId }) => {
                             style={{ background: item.color }}
                           ></div>
                           <div className={styles.block_title}>{item.title}</div>
+                          <div className={styles.closeBtn} onClick={() => {deleteBtn(item)}}>삭제</div>
                         </div>
                       ))}
               </div>
+
+             
             </div>
-          </div>
+
+            <div className={styles.list_container}>
+              <b>전체 일정</b>
+              <div className={styles.list}>
+                  {groupId === undefined
+                    ? groupEventList
+                        .filter(
+                          (prev) =>
+                            dayjs(prev.start_date) <= date &&
+                            dayjs(prev.end_date) >= date
+                        )
+                        .map((item) => (
+                          <div className={styles.block}>
+                            <img className={styles.img} src={item.picture?.length > 400 ? "data:image/png;base64," + item.picture : atob(item.picture)}></img>
+                            <div className={styles.block_title}>{item.title}</div>
+                            {
+                              writer == userId ? (
+                                <div className={styles.closeBtn} onClick={() => {deleteBtn(item)}}>삭제</div>
+                              ) : (
+                                <></>
+                              )
+                            }
+                          </div>
+                        ))
+                    : groupEventList
+                        .filter(
+                          (prev) =>
+                            prev.group_id === groupId &&
+                            dayjs(prev.start_date) <= date &&
+                            dayjs(prev.end_date) >= date
+                        )
+                        .map((item) => (
+                          <div className={styles.block}>
+                            <img className={styles.img} src={item.picture?.length > 400 ? "data:image/png;base64," + item.picture : atob(item.picture)}></img>
+                            <div className={styles.block_title}>{item.title}</div>
+                            {
+                              writer == userId ? (
+                                <div className={styles.closeBtn} onClick={() => {deleteBtn(item)}}>삭제</div>
+                              ) : (
+                                <></>
+                              )
+                            }
+                          </div>
+                        ))}
+                </div>
+              </div>
+            </div>
 
           <div>
             <div className={styles.modal_close_title}>
