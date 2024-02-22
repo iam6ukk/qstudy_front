@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./css/header.module.css";
 import styled from "styled-components";
 import Calendar from "react-calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Meeting from "../assets/meeting.png";
 import Sociology from "../assets/sociology.png";
 import { useCookies } from "react-cookie";
-
 
 export const CalendarBox = styled.div`
   position: absolute;
@@ -59,66 +58,110 @@ export const StyleCalendar = styled(Calendar)`
 `;
 
 const Header = () => {
-    const [today, setToday] = useState(new Date());
-    const [click, setClick] = useState("all");
-    const [cookies, setCookie, removeCookie] = useCookies();
+  const [today, setToday] = useState(new Date());
+  const [click, setClick] = useState("all");
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const params = useParams();
+  console.log(params["*"]);
 
-    const logout = (e) => {
-      if(window.confirm("로그아웃 하시겠습니까?")) {
-        alert("로그아웃 되었습니다.");
-        removeCookie("login")
-      } else {
-        e.preventDefault();
-      }
+  const logout = (e) => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      alert("로그아웃 되었습니다.");
+      removeCookie("login");
+    } else {
+      e.preventDefault();
     }
-    
-    return (
-        <div className={styles.header_container}>
-            <div style={{marginTop: "20px"}}></div>
+  };
 
-            <Link to={"/main/all"} onClick={() => {setClick("all")}}>
-                <div className={click === "all" ? styles.header_btn_active : styles.header_btn}>
-                    <span>전체 그룹</span>
-                    
-                </div></Link>
+  useEffect(() => {
+    setClick("my");
+  }, []);
 
-            <div style={{marginTop: "20px"}}></div>
+  return (
+    <div className={styles.header_container}>
+      <div style={{ marginTop: "20px" }}></div>
 
-            <Link to={"/main/my"} onClick={() => {setClick("my");}}>
-                <div className={click === "my" ? styles.header_btn_active : styles.header_btn}>
-                    <span>내 그룹</span>
-                </div>
-            </Link>
-
-            <div style={{marginTop: "20px"}}></div>
-            
-            <Link to={"/main/schedule"} onClick={() => {setClick("schedule")}}>
-                <div className={click === "schedule" ? styles.header_btn_active : styles.header_btn}>
-                    <span>내 일정관리</span>
-                </div>
-            </Link>
-            <div style={{marginTop: "20px"}}></div>
-
-            <Link to={"/main/mypage"} onClick={() => {setClick("mypage")}}>
-                <div className={click === "mypage" ? styles.header_btn_active : styles.header_btn}>
-                    <span>마이 페이지</span>
-                </div>
-            </Link>
-            <div style={{marginTop: "20px"}}></div>
-
-            <Link to={"/login"} onClick={logout}>
-                <div className={click === "logout" ? styles.header_btn_active : styles.header_btn}>
-                    <span>로그아웃</span>
-                </div>
-            </Link>
-
-
-            <CalendarBox>
-                <StyleCalendar locale="en" value={today} />
-            </CalendarBox>
-            
+      <Link
+        to={"/main/all"}
+        onClick={() => {
+          setClick("all");
+        }}
+      >
+        <div
+          className={
+            click === "all" ? styles.header_btn_active : styles.header_btn
+          }
+        >
+          <span>전체 그룹</span>
         </div>
-    )
-}
+      </Link>
+
+      <div style={{ marginTop: "20px" }}></div>
+
+      <Link
+        to={"/main/my"}
+        onClick={() => {
+          setClick("my");
+        }}
+      >
+        <div
+          className={
+            click === "my" ? styles.header_btn_active : styles.header_btn
+          }
+        >
+          <span>내 그룹</span>
+        </div>
+      </Link>
+
+      <div style={{ marginTop: "20px" }}></div>
+
+      <Link
+        to={"/main/schedule"}
+        onClick={() => {
+          setClick("schedule");
+        }}
+      >
+        <div
+          className={
+            click === "schedule" ? styles.header_btn_active : styles.header_btn
+          }
+        >
+          <span>내 일정관리</span>
+        </div>
+      </Link>
+      <div style={{ marginTop: "20px" }}></div>
+
+      <Link
+        to={"/main/mypage"}
+        onClick={() => {
+          setClick("mypage");
+        }}
+      >
+        <div
+          className={
+            click === "mypage" ? styles.header_btn_active : styles.header_btn
+          }
+        >
+          <span>마이 페이지</span>
+        </div>
+      </Link>
+      <div style={{ marginTop: "20px" }}></div>
+
+      <Link to={"/login"} onClick={logout}>
+        <div
+          className={
+            click === "logout" ? styles.header_btn_active : styles.header_btn
+          }
+        >
+          <span>로그아웃</span>
+        </div>
+      </Link>
+
+      <CalendarBox>
+        <StyleCalendar locale="en" value={today} />
+      </CalendarBox>
+    </div>
+  );
+};
 
 export default Header;

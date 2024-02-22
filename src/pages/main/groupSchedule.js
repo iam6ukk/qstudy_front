@@ -17,7 +17,7 @@ export const CalendarBox = styled(Calendar)`
   border: none;
   border-radius: 5px;
   width: auto;
-  margin-top: 30px;
+  margin-top: 20px;
   transition: 0.3s;
   height: 85%;
   //전체 컨테이너
@@ -240,7 +240,7 @@ const GroupSchedule = () => {
       const response_other = await axios.get(
         `http://localhost:8080/calendar/my/group?user_id=${id}&group_id=${groupId}`
       );
-      
+
       console.log("내 일정: ", response.data);
       console.log("다른 일정: ", response_other.data);
       setEventList(response.data.concat(response_other.data));
@@ -351,25 +351,26 @@ const GroupSchedule = () => {
                   </div>
                 );
               } else if (html.length < 2) {
-                let image = item.picture?.length > 400 ? "data:image/png;base64," + item.picture : atob(item.picture);
-                
+                let image =
+                  item.picture?.length > 400
+                    ? "data:image/png;base64," + item.picture
+                    : atob(item.picture);
+
                 html.push(
                   <div className="dot_container">
-                    {
-                      item.user_id != userId ? (
-                        item.picture ? (
-                          <img src={image} style={{marginRight: "5px"}}></img>
-                        ) : (
-                          <img src={User} style={{marginRight: "5px"}}></img>
-                        )
+                    {item.user_id != userId ? (
+                      item.picture ? (
+                        <img src={image} style={{ marginRight: "5px" }}></img>
                       ) : (
-                        <div
-                          className="dot"
-                          style={{ backgroundColor: item.color }}
-                        ></div>
+                        <img src={User} style={{ marginRight: "5px" }}></img>
                       )
-                    }
-                    
+                    ) : (
+                      <div
+                        className="dot"
+                        style={{ backgroundColor: item.color }}
+                      ></div>
+                    )}
+
                     <div className="text">{item.title}</div>
                   </div>
                 );
