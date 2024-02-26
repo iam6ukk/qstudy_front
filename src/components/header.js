@@ -61,8 +61,10 @@ export const StyleCalendar = styled(Calendar)`
 const Header = () => {
   const [today, setToday] = useState(new Date());
   const params = useParams();
-  const [click, setClick] = useState(params["*"]);
   const [cookies, setCookie, removeCookie] = useCookies();
+  let url = params['*'].split("/")[0];
+  const [click, setClick] = useState(url);
+
 
   const logout = (e) => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
