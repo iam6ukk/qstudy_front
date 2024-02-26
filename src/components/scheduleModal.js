@@ -30,6 +30,7 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
   const [groupEventList, setGroupEventList] = useState([]);
   const [userId, setUserId] = useState("");
 
+
   // 일자, 시간 선택
   const onChange = (value, dateString) => {
     console.log("Selected Time: ", value, typeof value);
@@ -188,8 +189,8 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
                   ? eventList
                       .filter(
                         (prev) =>
-                          dayjs(prev.start_date) <= date &&
-                          dayjs(prev.end_date) >= date
+                          dayjs(prev.start_date.split(" ")[0]) <= date &&
+                          dayjs(prev.end_date.split(" ")[0]) >= date
                       )
                       .map((item) => (
                         <div className={styles.block}>
@@ -205,8 +206,8 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
                       .filter(
                         (prev) =>
                           prev.group_id === groupId &&
-                          dayjs(prev.start_date) <= date &&
-                          dayjs(prev.end_date) >= date
+                          dayjs(prev.start_date.split(" ")[0]) <= date &&
+                          dayjs(prev.end_date.split(" ")[0]) >= date
                       )
                       .map((item) => (
                         <div className={styles.block}>
@@ -230,8 +231,8 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
                     ? groupEventList
                         .filter(
                           (prev) =>
-                            dayjs(prev.start_date) <= date &&
-                            dayjs(prev.end_date) >= date
+                            dayjs(prev.start_date.split(" ")[0]) <= date &&
+                            dayjs(prev.end_date.split(" ")[0]) >= date
                         )
                         .map((item) => (
                           <div className={styles.block}>
@@ -250,8 +251,8 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
                         .filter(
                           (prev) =>
                             prev.group_id === groupId &&
-                            dayjs(prev.start_date) <= date &&
-                            dayjs(prev.end_date) >= date
+                            dayjs(prev.start_date.split(" ")[0]) <= date &&
+                            dayjs(prev.end_date.split(" ")[0]) >= date
                         )
                         .map((item) => (
                           <div className={styles.block}>
