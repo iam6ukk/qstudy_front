@@ -158,6 +158,7 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
         getEventList();
       } catch(error) {
         alert("오류가 발생했습니다.");
+        console.log("ERROR : ", error);
       }
     }
   }

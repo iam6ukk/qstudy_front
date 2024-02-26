@@ -50,6 +50,7 @@ const GroupAddModal = ({ setOpenModal, data }) => {
       setMinuse(minus + 1);
     } catch (error) {
       alert("오류가 발생했습니다.");
+      console.log("ERROR : ", error);
     }
   };
 

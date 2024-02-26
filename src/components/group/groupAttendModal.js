@@ -12,7 +12,7 @@ const GroupAttendModal = ({ setOpenAttendModal, writer, group }) => {
 
   const submit = async () => {
     if (!window.confirm("스터디를 생성하시겠습니까?")) return;
-    let groupId = Math.random().toString(36).substring(2, 11);
+    let groupId = "g" + Math.random().toString(36).substring(2, 11);
 
     let data = {
       group_id: groupId,
