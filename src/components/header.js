@@ -22,6 +22,7 @@ export const StyleCalendar = styled(Calendar)`
   padding: 20px;
   .react-calendar__navigation {
     display: flex;
+
     height: 24px;
     margin-bottom: 1em;
   }
@@ -71,7 +72,6 @@ const Header = () => {
       e.preventDefault();
     }
   };
-
 
   return (
     <div className={styles.header_container}>

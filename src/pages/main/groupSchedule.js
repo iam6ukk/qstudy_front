@@ -258,7 +258,7 @@ const GroupSchedule = () => {
           user_id: userId,
         },
       });
-      window.location.reload();
+      window.location.replace("/main/my");
     } catch (error) {
       console.error(error);
     }
@@ -272,7 +272,7 @@ const GroupSchedule = () => {
           group_id: groupId,
         },
       });
-      window.location.reload();
+      window.location.replace("/main/my");
     } catch (error) {
       console.error(error);
     }
