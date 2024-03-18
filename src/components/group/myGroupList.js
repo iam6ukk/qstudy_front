@@ -54,12 +54,12 @@ const GroupList = () => {
 }
 
   async function group(id) {
-    const response = await axios.get(`http://localhost:8080/group/all?id=${id}`);
+    const response = await axios.get(`http://210.114.19.32:8080/group/all?id=${id}`);
     return response.data;
   }
 
   async function myGroup(id) {
-    const response = await axios.get(`http://localhost:8080/group/my?id=${id}`);
+    const response = await axios.get(`http://210.114.19.32:8080/group/my?id=${id}`);
     return response.data;
   }
 

@@ -89,7 +89,7 @@ const LoginPage = () => {
         id: id,
         password: pwd,
       };
-      axios.post("http://localhost:8080/login", loginData).then((response) => {
+      axios.post("http://210.114.19.32:8080/login", loginData).then((response) => {
         console.log(response.data);
 
         let res = response.data[0];

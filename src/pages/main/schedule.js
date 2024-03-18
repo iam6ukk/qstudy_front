@@ -208,7 +208,7 @@ const Schedule = () => {
   async function getEventList(id) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/calendar/my?id=${id}`
+        `http://210.114.19.32:8080/calendar/my?id=${id}`
       );
       // console.log("내 일정: ", response.data);
       setEventList(response.data);

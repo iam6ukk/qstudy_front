@@ -16,7 +16,7 @@ const GroupMember = ({
   async function getMember(groupId) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/group/attend/member?id=${groupId}`
+        `http://210.114.19.32:8080/group/attend/member?id=${groupId}`
       );
       console.log("그룹 멤버 목록: ", response.data);
       setMember(response.data);
@@ -54,7 +54,7 @@ const GroupMember = ({
   // 스터디원 추방
   async function deleteGroupMember(user) {
     try {
-      await axios.delete("http://localhost:8080/group/attend/member/delete", {
+      await axios.delete("http://210.114.19.32:8080/group/attend/member/delete", {
         data: {
           group_id: groupId,
           user_id: user.id,

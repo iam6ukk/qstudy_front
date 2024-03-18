@@ -33,7 +33,7 @@ const SignupPage = () => {
         nickname: nickname,
       };
       axios
-        .post("http://localhost:8080/signup", userData)
+        .post("http://210.114.19.32:8080/signup", userData)
         .then((response) => {
           console.log(response);
           navigate("/login");

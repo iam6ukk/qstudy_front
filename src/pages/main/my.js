@@ -12,7 +12,7 @@ const My = () => {
   let navigation = useNavigate();
 
   async function myGroup(id) {
-    const response = await fetch(`http://localhost:8080/group/my?id=${id}`);
+    const response = await fetch(`http://210.114.19.32:8080/group/my?id=${id}`);
     const myGroupList = await response.json();
     console.log("myGroup: " + myGroupList);
     setList(myGroupList);

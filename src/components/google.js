@@ -16,7 +16,7 @@ const GoogleLoginButton = () => {
       //console.log(decodedToken);
 
 
-      await fetch("http://localhost:8080/login/google", {
+      await fetch("http://210.114.19.32:8080/login/google", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

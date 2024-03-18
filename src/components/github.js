@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const GithubButton  = (props) => {
   const clientId = process.env.REACT_APP_GITHUB;
-  const redirectUrl = 'http://localhost:8080/login'
+  const redirectUrl = 'http://210.114.19.32:8080/login'
   const githubURL = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}`
   const handleLogin = ()=>{
       window.location.href = githubURL

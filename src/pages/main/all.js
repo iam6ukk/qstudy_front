@@ -17,7 +17,7 @@ const Board = () => {
   let params = useParams();
 
   async function group(id) {
-    const response = await fetch(`http://localhost:8080/group/all?id=${id}`);
+    const response = await fetch(`http://210.114.19.32:8080/group/all?id=${id}`);
     const groupList = await response.json();
     setList(groupList);
   }

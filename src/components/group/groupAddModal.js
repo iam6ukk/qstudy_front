@@ -31,7 +31,7 @@ const GroupAddModal = ({ setOpenModal, data }) => {
   const submit = async () => {
     setOpenModal(false);
     try {
-      await fetch(`http://localhost:8080/group/attend`, {
+      await fetch(`http://210.114.19.32:8080/group/attend`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

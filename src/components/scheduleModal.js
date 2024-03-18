@@ -73,11 +73,11 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
   async function getLocalEventList(id) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/calendar/my?id=${id}`
+        `http://210.114.19.32:8080/calendar/my?id=${id}`
       );
 
       const response_group = await axios.get(
-        `http://localhost:8080/calendar/my/group?group_id=${groupId}&user_id=${id}`
+        `http://210.114.19.32:8080/calendar/my/group?group_id=${groupId}&user_id=${id}`
       );
       console.log("내 일정: ", response.data);
       console.log("다른 일정 : ", response_group.data);
@@ -91,7 +91,7 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
   async function groupData(id) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/group/my?id=${id}`
+        `http://210.114.19.32:8080/group/my?id=${id}`
       );
       let groupData = response.data;
       setGroup(groupData);
@@ -137,7 +137,7 @@ const ScheduleModal = ({writer, getEventList, date, setOpenModal, groupId }) => 
         memo: memo,
       };
       axios
-        .post("http://localhost:8080/calendar/event", event)
+        .post("http://210.114.19.32:8080/calendar/event", event)
         .then((response) => {
           console.log(response);
           alert("저장되었습니다.");
