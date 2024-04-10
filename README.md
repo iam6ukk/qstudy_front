@@ -18,7 +18,7 @@ QStudy 프로젝트는 학습 관련 기능을 중점으로 모임 관리를 쉽
 
 
 ### 1. 팀 소개
-👩‍💻[김유경](https://github.com/iam6ukk) (풀스택 개발자)
+👩‍💻[김유경](https://github.com/ponikoii) (풀스택 개발자)
 
 👨‍💻[김진원](https://github.com/hdev1004) (풀스택 개발자)   
 
