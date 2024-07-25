@@ -161,7 +161,7 @@ const LoginPage = () => {
         </div>
 
         <div className={styles.sso_wrap}>
-          <GoogleButton />
+          {/*<GoogleButton />*/}
           <GithubButton />
         </div>
       </div>
